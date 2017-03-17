@@ -2,12 +2,14 @@
 
 namespace app\controllers;
 
+use app\models\Cliente;
 use app\models\Historico;
 use Yii;
 use app\models\Venda;
 use app\models\VendaSearch;
 use yii\helpers\Url;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -51,10 +53,12 @@ class VendaController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($id,$nome)
     {
+        $this->layout = 'newmain';
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'nome' => $nome
         ]);
     }
 
@@ -82,7 +86,7 @@ class VendaController extends Controller
 
                 Yii::$app->session->setFlash('vendaEfetuada');
                 
-                return "deu certo";
+                return $this->redirect('index.php?r=site/index');
 
             }else{
 
@@ -104,16 +108,21 @@ class VendaController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate()
     {
-        $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idcompra]);
+        $model = $this->findModel($_POST['id']);
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->data_venda = date('d - m - Y');
+            if ($model->save()) {
+
+                Yii::$app->session->setFlash('alteracaoEfetuada');
+                return $this->redirect(Url::to(['site/pesquisa', 'nome' => $_POST['nome']]));
+            }
         } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            throw new ForbiddenHttpException;
+
         }
     }
 
@@ -127,7 +136,9 @@ class VendaController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        Yii::$app->session->setFlash('exclusaoEfetuada');
+
+        return $this->redirect('index.php?r=site/index');
     }
 
     /**

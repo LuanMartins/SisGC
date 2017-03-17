@@ -138,7 +138,7 @@ $this->title = 'My Yii Application';
 
                 <legend class="text-info">
                     <div id="texto">
-                    <small><strong>Pesquise Pelo Cliente</strong></small>
+                    <small><strong><center>Pesquise Pelo Cliente</center></strong></small>
                         </div>
                     </legend>
 
@@ -146,7 +146,7 @@ $this->title = 'My Yii Application';
 
 
                 <div class="input-group">
-                    <?= Html::textInput('nome',null,['class' =>'form-control','placeholder' => 'Pesquise']) ?>
+                    <?= Html::textInput('nome',null,['class' =>'form-control','placeholder' => 'Digite o Nome ou Apelido']) ?>
 
                     <div class="input-group-btn">
                         <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>

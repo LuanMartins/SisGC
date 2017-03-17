@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\widgets\ActiveForm;
+use yii\helpers\Url;
+use yii\bootstrap\Modal;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Venda */
@@ -14,8 +17,37 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
+
+
     <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->idcompra], ['class' => 'btn btn-primary']) ?>
+        <?php Modal::begin([
+
+            'header' => '<h2>Atualize o Valor</h2>',
+            'toggleButton' => ['class' => 'btn btn-primary', 'label' => "<i class='fa fa-comments-o'> Atualizar </i>"]
+
+        ]);
+        ?>
+
+        <?php $form = ActiveForm::begin(['method' => 'post', 'action' => Url::to('index.php?r=venda/update')]); ?>
+
+        <?= $form->field($model, 'valor')->textInput() ?>
+        <input name="id" type="hidden" value= <?= $model->idcompra ?>>
+        <input name="nome" type="hidden" value=<?= $nome ?>>
+
+    <div class="form-group">
+        <?= Html::submitButton(Yii::t('app', 'Atualizar'), ['class' => 'btn btn-primary']) ?>
+    </div>
+
+        <?php ActiveForm::end(); ?>
+
+        <?php
+
+           Modal::end();
+
+
+        ?>
+
+
         <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->idcompra], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -28,11 +60,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'idcompra',
             'valor',
             'data_venda',
-            'comprador_idcomprador',
-            'user_id',
+
         ],
     ]) ?>
 

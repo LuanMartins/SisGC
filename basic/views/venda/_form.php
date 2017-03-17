@@ -14,11 +14,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'valor')->textInput() ?>
 
-    <?= $form->field($model, 'data_venda')->textInput(['maxlength' => true]) ?>
+    <input type="hidden" value=<?= isset($nome)?$nome:null?>>
 
-    <?= $form->field($model, 'comprador_idcomprador')->textInput() ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
