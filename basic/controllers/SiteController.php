@@ -15,7 +15,7 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use yii\db\Query;
 use yii\web\ForbiddenHttpException;
-
+use yii\data\ActiveDataProvider;
 class SiteController extends Controller
 {
     public $layout = 'newmain';
@@ -93,13 +93,54 @@ class SiteController extends Controller
 
         if(Yii::$app->request->get()) {
 
-            return $this->render('resultados');
+            $dataProvider = new ActiveDataProvider(
+                ['query' => Venda::find()->joinWith('compradorIdcomprador')->where(['nome' => $nome]),
+                    //'pagination' => 10,
+
+
+                ]
+            );
+
+
+            $model = new Venda();
+
+            $valorTotal = Venda::find()->joinWith('compradorIdcomprador')->where(['like','nome',$nome])->sum('valor');
+
+
+            //return var_dump($valorTotal);
+
+            if($dataProvider->count == 0){
+
+                $dataProvider = new ActiveDataProvider(
+                    ['query' => Venda::find()->joinWith('compradorIdcomprador')->where(['like','apelido',$nome]),
+                        'pagination' => [
+                          'pageSize' => 10,
+                        ],
+
+
+                    ]
+                );
+
+                $valorTotal = Venda::find()->joinWith('compradorIdcomprador')->where(['apelido' => $nome])->sum('valor');
+
+            }
+            //return $dataProvider;
+
+           return $this->render('resultados',['dataProvider'=>$dataProvider,'valorTotal'=>$valorTotal,'model' => $model]);
         }else{
 
 
             throw new ForbiddenHttpException;
         }
 
+    }
+    
+    
+    public function actionAtualizar($id){
+        
+        $venda = Venda::findOne($id);
+
+        return var_dump($venda);
     }
 
     /**

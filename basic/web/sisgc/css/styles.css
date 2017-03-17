@@ -9,13 +9,30 @@ Version 1.0
 
 /* meus css */
 
+#valor_total{
+
+	float: right;
+	padding: 3% 3% 3% 3%;
+	//border: solid;
+	margin-right: 3%;
+	background-color: #fff;
+}
+
+#valor_total h1{
+
+	font-size: 30px;
+}
+
+#valor_total p{
+
+	font-size: 25px;
+	float: right;
+}
 
 
 #texto{
 
-	margin: 0 auto;
-	padding-left: 35%;
-	width: 100%;
+	margin-top: 10%;
 	font-size: 30px;
 }
 

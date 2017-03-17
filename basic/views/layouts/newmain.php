@@ -41,7 +41,7 @@ use yii\helpers\Url;
             <?php if(!Yii::$app->user->isGuest){?>
             <ul class="user-menu">
                 <li class="dropdown pull-right">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> User <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> <?=Yii::$app->user->identity->username?> <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
 
                         <li>
