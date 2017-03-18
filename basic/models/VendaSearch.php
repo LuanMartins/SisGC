@@ -64,6 +64,7 @@ class VendaSearch extends Venda
             'valor' => $this->valor,
             'comprador_idcomprador' => $this->comprador_idcomprador,
             'user_id' => $this->user_id,
+
         ]);
 
         $query->andFilterWhere(['like', 'data_venda', $this->data_venda]);

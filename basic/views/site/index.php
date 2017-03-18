@@ -48,7 +48,7 @@ $this->title = 'My Yii Application';
                     'tabindex' => false // important for Select2 to work properly
                 ],
 
-                'header' => '<h2>Envie Sua Mensagem</h2>',
+                'header' => '<h2>Cadastrar Venda</h2>',
                 'toggleButton' => ['class' => 'btn btn-md btn-primary', 'label' => "<i class='fa fa-comments-o'> Realizar Venda </i>"]
             ]);
 
@@ -113,56 +113,42 @@ $this->title = 'My Yii Application';
             \yii\bootstrap\Modal::begin([
 
                 'header' => '<h2>Historico</h2>',
-                'toggleButton' => ['class' => 'btn btn-md btn-alert', 'label' => "<i class='fa fa-comments-o'> Historico de Vendas</i>"]
+                'toggleButton' => ['class' => 'btn btn-md btn-default', 'label' => "<i class='fa fa-comments-o'> Historico de Vendas</i>"]
 
             ]) ?>
 
-
-            <?php
-
-
-
-            \yii\widgets\Pjax::begin();
-
-            '<div class="input-group">';
-
-            $form = ActiveForm::begin(['method' => 'post', 'action' => '?r=site/index']);
-
-            echo $form->field($model,'data_venda')->dropDownList([ArrayHelper::map(Venda::find()->all(),'data_venda','data_venda')]);
-
-
-            //Html::beginForm(['site/index'], 'post', ['data-pjax' => '', 'class' => 'form-inline']);
-            //echo Html::dropDownList('data',null,[ArrayHelper::map(Venda::find()->all(),'data_venda','data_venda')]);
-            //echo Html::submitButton('Hash String', ['class' => 'btn btn-lg btn-primary', 'name' => 'hash-button']);
-            //Html::endForm();
-
-            $form = ActiveForm::end();
-
-            \yii\widgets\Pjax::end();
-
-            \yii\widgets\Pjax::begin();
-
-            echo \yii\widgets\ListView::widget([
-
+            <?php \yii\widgets\Pjax::begin(); ?>
+            <?= \yii\grid\GridView::widget([
                 'dataProvider' => $dataProvider,
-                'options' =>[
-                    'tag' => 'div',
-                    'class' => 'list-wrapper',
-                    'id' => 'list',
+                'filterModel' => $searchModel,
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
+                    [
+                    'label' => 'Vendedor',
+                    'attribute' => '',
+                    'value' => 'user.username'
+                    ],
 
+                    'compradorIdcomprador.nome',
+                    'data_venda',
+
+                    ['class' => 'yii\grid\ActionColumn',
+
+                        'template' => '{registro}',
+                        'buttons' =>[
+                            'registro' => function ($url,$model,$key){
+                                return \yii\helpers\Html::a('<i class="glyphicon glyphicon-download">', ['site/pdf', 'data'=>$model->data_venda]);
+
+                            }
+
+                        ],
+
+
+
+                    ],
                 ],
-                'layout' => "{pager}\n{items}\n{summary}",
-                'itemView' => function ($model, $key, $index, $widget) {
-
-
-                    return "<strong>Vendedor </strong>".$model->user->username." "."<strong>Comprador</strong> ".$model->compradorIdcomprador->nome." "."
-                    <strong>Valor</strong> ".$model->valor." R$";
-                }
-
-            ]);
-
-             \yii\widgets\Pjax::end();
-            ?>
+            ]); ?>
+            <?php \yii\widgets\Pjax::end(); ?>
 
             <?php \yii\bootstrap\Modal::end();
 
@@ -197,6 +183,8 @@ $this->title = 'My Yii Application';
         <?php }?>
 
 
+
+        <?php if (!Yii::$app->user->isGuest){?>
         <div class="row">
             <div class="col-md-12">
 
@@ -223,10 +211,13 @@ $this->title = 'My Yii Application';
             </div>
 
 
-  
 
+<?php }?>
 
     </div>
 </div>
+
+
+
 
 

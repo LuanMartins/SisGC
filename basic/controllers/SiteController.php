@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Cliente;
 use app\models\User;
 use app\models\Venda;
+use kartik\form\ActiveField;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Yii;
 use yii\filters\AccessControl;
@@ -16,6 +17,7 @@ use app\models\ContactForm;
 use yii\db\Query;
 use yii\web\ForbiddenHttpException;
 use yii\data\ActiveDataProvider;
+use app\models\VendaSearch;
 class SiteController extends Controller
 {
     public $layout = 'newmain';
@@ -66,6 +68,14 @@ class SiteController extends Controller
      *
      * @return string
      */
+
+    public function actionPdf($data){
+
+
+
+        return $data;
+
+    }
     public function actionIndex()
     {
 
@@ -76,48 +86,25 @@ class SiteController extends Controller
             $model = new Venda();
             $modelCliente = new Cliente();
 
-
-            if(Yii::$app->request->post()){
-
-                $dataProvider = new ActiveDataProvider(
-                    ['query' => Venda::find()->joinWith('compradorIdcomprador')->joinWith('user')->where(['data_venda' => $model->data_venda]),
-                        'pagination' => [
-                            'pageSize' => 10,
-                        ],
+            $searchModel = new VendaSearch();
+            $dataProvider = new ActiveDataProvider([
+                'query' => Venda::find()->joinWith('compradorIdcomprador')->joinWith('user')->orderBy('data_venda'),
+                'pagination' => [
+                    'pageSize' => 10,
+                ],
 
 
-                    ]
-                );
 
-                return $this->render('index',[
-                    'dataProvider' => $dataProvider
-                ]);
-
-            }
-
-            $dataProvider = new ActiveDataProvider(
-                ['query' => Venda::find()->joinWith('compradorIdcomprador')->joinWith('user')->where(['data_venda' => date('d - m - Y')]),
-                    'pagination' => [
-                        'pageSize' => 10,
-                    ],
-
-
-                ]
-            );
-
+            ]);
 
             return $this->render('index',['model'=>$model,'modelCliente' => $modelCliente,
-                'dataProvider' => $dataProvider
+                'dataProvider' => $dataProvider,
+                'searchModel' => $searchModel
             ]);
 
         }
 
         return $this->render('index');
-    }
-
-    public function actionTeste()
-    {
-        return $this->render('index', ['time' => date('H:i:s')]);
     }
 
 
@@ -126,6 +113,8 @@ class SiteController extends Controller
 
 
         if(Yii::$app->request->get()) {
+
+            
 
             $dataProvider = new ActiveDataProvider(
                 ['query' => Venda::find()->joinWith('compradorIdcomprador')->where(['nome' => $nome]),
@@ -198,10 +187,7 @@ class SiteController extends Controller
             //$resultados = User::find()->where(['id'=>$model->getId()])->one();
 
             //return $this->render('index',['resultado'=>$resultados]);
-            $model = new Venda();
-            $modelCliente = new Cliente();
-
-            return $this->render('index',['model'=>$model,'modelCliente' => $modelCliente]);
+          return $this->redirect('index');
         }
         return $this->render('login', [
             'model' => $model,
