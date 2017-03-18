@@ -9,8 +9,10 @@ use kartik\widgets\Select2;
 use yii\web\JsExpression;
 use app\models\Cliente;
 use yii\helpers\ArrayHelper;
+use app\models\Venda;
 
 $url = \yii\helpers\Url::to(['cliente-list']);
+
 
 $this->title = 'My Yii Application';
 ?>
@@ -46,7 +48,7 @@ $this->title = 'My Yii Application';
                     'tabindex' => false // important for Select2 to work properly
                 ],
 
-                'header' => '<h2>Envie Sua Mensagem</h2>',
+                'header' => '<h2>Cadastrar Venda</h2>',
                 'toggleButton' => ['class' => 'btn btn-md btn-primary', 'label' => "<i class='fa fa-comments-o'> Realizar Venda </i>"]
             ]);
 
@@ -105,6 +107,54 @@ $this->title = 'My Yii Application';
 
 
 
+        <?php
+
+        if(isset($dataProvider)){
+            \yii\bootstrap\Modal::begin([
+
+                'header' => '<h2>Historico</h2>',
+                'toggleButton' => ['class' => 'btn btn-md btn-default', 'label' => "<i class='fa fa-comments-o'> Historico de Vendas</i>"]
+
+            ]) ?>
+
+            <?php \yii\widgets\Pjax::begin(); ?>
+            <?= \yii\grid\GridView::widget([
+                'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
+                    [
+                    'label' => 'Vendedor',
+                    'attribute' => '',
+                    'value' => 'user.username'
+                    ],
+
+                    'compradorIdcomprador.nome',
+                    'data_venda',
+
+                    ['class' => 'yii\grid\ActionColumn',
+
+                        'template' => '{registro}',
+                        'buttons' =>[
+                            'registro' => function ($url,$model,$key){
+                                return \yii\helpers\Html::a('<i class="glyphicon glyphicon-download">', ['site/pdf', 'data'=>$model->data_venda]);
+
+                            }
+
+                        ],
+
+
+
+                    ],
+                ],
+            ]); ?>
+            <?php \yii\widgets\Pjax::end(); ?>
+
+            <?php \yii\bootstrap\Modal::end();
+
+
+         }?>
+
 
      </div>
         </div>
@@ -133,6 +183,8 @@ $this->title = 'My Yii Application';
         <?php }?>
 
 
+
+        <?php if (!Yii::$app->user->isGuest){?>
         <div class="row">
             <div class="col-md-12">
 
@@ -159,10 +211,13 @@ $this->title = 'My Yii Application';
             </div>
 
 
-  
 
+<?php }?>
 
     </div>
 </div>
+
+
+
 
 

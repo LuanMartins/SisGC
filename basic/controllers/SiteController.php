@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Cliente;
 use app\models\User;
 use app\models\Venda;
+use kartik\form\ActiveField;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Yii;
 use yii\filters\AccessControl;
@@ -16,6 +17,7 @@ use app\models\ContactForm;
 use yii\db\Query;
 use yii\web\ForbiddenHttpException;
 use yii\data\ActiveDataProvider;
+use app\models\VendaSearch;
 class SiteController extends Controller
 {
     public $layout = 'newmain';
@@ -66,6 +68,14 @@ class SiteController extends Controller
      *
      * @return string
      */
+
+    public function actionPdf($data){
+
+
+
+        return $data;
+
+    }
     public function actionIndex()
     {
 
@@ -76,9 +86,20 @@ class SiteController extends Controller
             $model = new Venda();
             $modelCliente = new Cliente();
 
+            $searchModel = new VendaSearch();
+            $dataProvider = new ActiveDataProvider([
+                'query' => Venda::find()->joinWith('compradorIdcomprador')->joinWith('user')->orderBy('data_venda'),
+                'pagination' => [
+                    'pageSize' => 10,
+                ],
 
+
+
+            ]);
 
             return $this->render('index',['model'=>$model,'modelCliente' => $modelCliente,
+                'dataProvider' => $dataProvider,
+                'searchModel' => $searchModel
             ]);
 
         }
@@ -93,9 +114,13 @@ class SiteController extends Controller
 
         if(Yii::$app->request->get()) {
 
+            
+
             $dataProvider = new ActiveDataProvider(
                 ['query' => Venda::find()->joinWith('compradorIdcomprador')->where(['nome' => $nome]),
-                    //'pagination' => 10,
+                    'pagination' => [
+                        'pageSize' => 10,
+                    ],
 
 
                 ]
@@ -162,10 +187,7 @@ class SiteController extends Controller
             //$resultados = User::find()->where(['id'=>$model->getId()])->one();
 
             //return $this->render('index',['resultado'=>$resultados]);
-            $model = new Venda();
-            $modelCliente = new Cliente();
-
-            return $this->render('index',['model'=>$model,'modelCliente' => $modelCliente]);
+          return $this->redirect('index');
         }
         return $this->render('login', [
             'model' => $model,

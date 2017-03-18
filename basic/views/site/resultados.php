@@ -25,7 +25,7 @@
         <?php echo \yii\grid\GridView::widget(
             [
                 'dataProvider' => $dataProvider,
-
+                
 
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],

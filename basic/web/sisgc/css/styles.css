@@ -9,6 +9,8 @@ Version 1.0
 
 /* meus css */
 
+
+
 #valor_total{
 
 	float: right;
@@ -49,7 +51,7 @@ label {
 
 #botoes{
 
-	width: 30%;
+	width: 40%;
 	margin: 0 auto;
 }
 
