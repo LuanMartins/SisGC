@@ -77,13 +77,47 @@ class SiteController extends Controller
             $modelCliente = new Cliente();
 
 
+            if(Yii::$app->request->post()){
+
+                $dataProvider = new ActiveDataProvider(
+                    ['query' => Venda::find()->joinWith('compradorIdcomprador')->joinWith('user')->where(['data_venda' => $model->data_venda]),
+                        'pagination' => [
+                            'pageSize' => 10,
+                        ],
+
+
+                    ]
+                );
+
+                return $this->render('index',[
+                    'dataProvider' => $dataProvider
+                ]);
+
+            }
+
+            $dataProvider = new ActiveDataProvider(
+                ['query' => Venda::find()->joinWith('compradorIdcomprador')->joinWith('user')->where(['data_venda' => date('d - m - Y')]),
+                    'pagination' => [
+                        'pageSize' => 10,
+                    ],
+
+
+                ]
+            );
+
 
             return $this->render('index',['model'=>$model,'modelCliente' => $modelCliente,
+                'dataProvider' => $dataProvider
             ]);
 
         }
 
         return $this->render('index');
+    }
+
+    public function actionTeste()
+    {
+        return $this->render('index', ['time' => date('H:i:s')]);
     }
 
 
@@ -95,7 +129,9 @@ class SiteController extends Controller
 
             $dataProvider = new ActiveDataProvider(
                 ['query' => Venda::find()->joinWith('compradorIdcomprador')->where(['nome' => $nome]),
-                    //'pagination' => 10,
+                    'pagination' => [
+                        'pageSize' => 10,
+                    ],
 
 
                 ]

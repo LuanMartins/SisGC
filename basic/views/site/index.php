@@ -9,8 +9,10 @@ use kartik\widgets\Select2;
 use yii\web\JsExpression;
 use app\models\Cliente;
 use yii\helpers\ArrayHelper;
+use app\models\Venda;
 
 $url = \yii\helpers\Url::to(['cliente-list']);
+
 
 $this->title = 'My Yii Application';
 ?>
@@ -104,6 +106,68 @@ $this->title = 'My Yii Application';
 
 
 
+
+        <?php
+
+        if(isset($dataProvider)){
+            \yii\bootstrap\Modal::begin([
+
+                'header' => '<h2>Historico</h2>',
+                'toggleButton' => ['class' => 'btn btn-md btn-alert', 'label' => "<i class='fa fa-comments-o'> Historico de Vendas</i>"]
+
+            ]) ?>
+
+
+            <?php
+
+
+
+            \yii\widgets\Pjax::begin();
+
+            '<div class="input-group">';
+
+            $form = ActiveForm::begin(['method' => 'post', 'action' => '?r=site/index']);
+
+            echo $form->field($model,'data_venda')->dropDownList([ArrayHelper::map(Venda::find()->all(),'data_venda','data_venda')]);
+
+
+            //Html::beginForm(['site/index'], 'post', ['data-pjax' => '', 'class' => 'form-inline']);
+            //echo Html::dropDownList('data',null,[ArrayHelper::map(Venda::find()->all(),'data_venda','data_venda')]);
+            //echo Html::submitButton('Hash String', ['class' => 'btn btn-lg btn-primary', 'name' => 'hash-button']);
+            //Html::endForm();
+
+            $form = ActiveForm::end();
+
+            \yii\widgets\Pjax::end();
+
+            \yii\widgets\Pjax::begin();
+
+            echo \yii\widgets\ListView::widget([
+
+                'dataProvider' => $dataProvider,
+                'options' =>[
+                    'tag' => 'div',
+                    'class' => 'list-wrapper',
+                    'id' => 'list',
+
+                ],
+                'layout' => "{pager}\n{items}\n{summary}",
+                'itemView' => function ($model, $key, $index, $widget) {
+
+
+                    return "<strong>Vendedor </strong>".$model->user->username." "."<strong>Comprador</strong> ".$model->compradorIdcomprador->nome." "."
+                    <strong>Valor</strong> ".$model->valor." R$";
+                }
+
+            ]);
+
+             \yii\widgets\Pjax::end();
+            ?>
+
+            <?php \yii\bootstrap\Modal::end();
+
+
+         }?>
 
 
      </div>
