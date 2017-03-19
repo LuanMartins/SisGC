@@ -42,10 +42,6 @@
 
                             'atualizar' => function ($url,$model,$key){
 
-
-
-
-
                                 return \yii\helpers\Html::a('<i class="glyphicon glyphicon-pencil">', ['venda/view', 'id'=>$model->idcompra,'nome' => $model->compradorIdcomprador->nome]);
 
                             }

@@ -18,6 +18,8 @@ use yii\web\IdentityInterface;
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
+    public $vendedor;
+    public $senha;
     /**
      * @inheritdoc
      */
@@ -46,8 +48,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'username' => Yii::t('app', 'Username'),
-            'password' => Yii::t('app', 'Password'),
+            'username' => Yii::t('app', 'Vendedor'),
+            'password' => Yii::t('app', 'Senha'),
             'authkey' => Yii::t('app', 'Authkey'),
             'accesstoken' => Yii::t('app', 'Accesstoken'),
         ];
@@ -56,7 +58,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 
     public function beforeSave($insert)
     {
-        $this->password = sha1($this->password);
+        $this->senha = sha1($this->senha);
 
 
         return parent::beforeSave($insert);

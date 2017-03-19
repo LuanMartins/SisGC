@@ -10,6 +10,22 @@ Version 1.0
 /* meus css */
 
 
+.buttons{
+
+
+
+	margin: 0 auto;
+	border: solid;
+}
+
+.pagina{
+
+
+	margin: 0 auto;
+	padding-left: 3%;
+
+
+}
 
 #valor_total{
 
@@ -34,7 +50,7 @@ Version 1.0
 
 #texto{
 
-	margin-top: 10%;
+	margin-top: 5%;
 	font-size: 30px;
 }
 
