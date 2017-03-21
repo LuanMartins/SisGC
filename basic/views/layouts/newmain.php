@@ -37,7 +37,7 @@ use yii\helpers\Url;
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><span>Lumino</span>Admin</a>
+            <a class="navbar-brand" href="#"><span>SISGC</span> - Sistema de Gerenciamento de Clientes</a>
             <?php if(!Yii::$app->user->isGuest){?>
             <ul class="user-menu">
                 <li class="dropdown pull-right">
@@ -78,7 +78,7 @@ use yii\helpers\Url;
 
     </ul>
 
-    <div class="attribution">Template by <a href="http://www.medialoot.com/item/lumino-admin-bootstrap-template/">Medialoot</a><br/><a href="http://www.glyphs.co" style="color: #333;">Icons by Glyphs</a></div>
+    <div class="attribution"><img src="./logo.png" width="200px"></div>
 </div><!--/.sidebar-->
 
 
@@ -111,6 +111,9 @@ use yii\helpers\Url;
             <div id="rodape">
 
             <a href="luanmartins.esy.es">Luan Martins - Soluções em Desenvolvimento &copy; <?= date('Y') ?> </a>
+
+
+                <img src="./logo.jpg" width="250px" height="140px">
             </div>
         </div>
         </div>

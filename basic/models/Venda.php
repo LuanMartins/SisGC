@@ -34,7 +34,7 @@ class Venda extends \yii\db\ActiveRecord
     {
         return [
             [['valor', 'data_venda', 'comprador_idcomprador', 'user_id'], 'required'],
-            [['valor'], 'number'],
+            [['valor'], 'double'],
             [['comprador_idcomprador', 'user_id'], 'integer'],
             [['data_venda'], 'string', 'max' => 45],
             [['comprador_idcomprador'], 'exist', 'skipOnError' => true, 'targetClass' => Cliente::className(), 'targetAttribute' => ['comprador_idcomprador' => 'idcomprador']],
