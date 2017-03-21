@@ -208,15 +208,6 @@ class SiteController extends Controller
         $model = new LoginForm();
         $modelCadastro = new User();
 
-
-        if ($modelCadastro->load(Yii::$app->request->post()) && $modelCadastro->save()) {
-
-            Yii::$app->session->hasFlash('vendaEfetuada');
-
-            return $this->redirect('?r=site/login');
-
-        }
-
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
 
             //$resultados = User::find()->where(['id'=>$model->getId()])->one();
@@ -224,10 +215,37 @@ class SiteController extends Controller
             //return $this->render('index',['resultado'=>$resultados]);
           return $this->redirect('?r=site/index');
         }
+
+
+
         return $this->render('login', [
             'model' => $model,'modelCadastro' => $modelCadastro
         ]);
     }
+
+    /*public function actionCadastro(){
+
+
+
+        $model = new User();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            Yii::$app->session->hasFlash('cadastroFormSubmited');
+
+
+            $flag = true;
+
+
+            return $this->render('cadastro', [
+                'model' => $model,'flag'=> $flag,
+            ]);
+        }
+
+        return $this->render('cadastro', [
+            'model' => $model,
+        ]);
+    }*/
 
     /**
      * Logout action.

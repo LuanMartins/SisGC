@@ -21,7 +21,8 @@
         "amnah/yii2-user": "^5.0",
         "kartik-v/yii2-password": "^1.5",
         "kartik-v/yii2-widgets": "^3.4",
-        "kartik-v/yii2-mpdf": "^1.0"
+        "kartik-v/yii2-mpdf": "^1.0",
+        "kartik-v/yii2-icons": "^1.4"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

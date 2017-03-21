@@ -10,6 +10,44 @@ Version 1.0
 /* meus css */
 
 
+#alerta{
+
+
+	margin-top: 40%;
+}
+
+#login{
+
+
+	margin-top: 10%;
+}
+
+#sobre{
+
+	margin-top: 5%;
+	padding-left: 22%;
+	width: 100%;
+
+}
+
+
+
+#imagem{
+
+	margin-top: 10%;
+	margin-left: 64%;
+}
+
+.centralizar{
+
+
+
+	margin-left: 62%;
+	margin-top: 3%;
+	width: 50%;
+
+}
+
 .buttons{
 
 
@@ -82,6 +120,7 @@ label {
 	font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
 	margin-top: 25%;
 	padding-left: 10%;
+	position: absolute;
 
 
 }

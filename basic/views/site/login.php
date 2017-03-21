@@ -11,56 +11,38 @@ $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
+<br>
+<div class="row">
 
-<div class="site-login">
-
-
-    <legend class="text-info">
-        <div id="texto">
-            <small><strong><center><h1><?= Html::encode($this->title) ?></h1></center></strong></small>
-        </div>
-    </legend>
-
-
-    <div class="pagina">
-    <p>Digite os campos necessários para o efetuar o login:</p>
+    <div id="login">
+    <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+        <div class="login-panel panel panel-default">
+            <div class="panel-heading">Entrar</div>
+            <div class="panel-body">
+                <?php $form = ActiveForm::begin([
 
 
+                ]); ?>
 
+                <fieldset>
+                        <div class="form-group">
+                            <?= $form->field($model, 'username')->textInput(['class'=>'form-control','placeholder'=>'vendedor','autoFocus' => true])->label(false) ?>
+                        </div>
+                        <div class="form-group">
+                            <?= $form->field($model, 'password')->passwordInput(['class' => 'form-control','placeholder' => 'senha'])->label(false) ?>
 
-    <?php $form = ActiveForm::begin([
-        'id' => 'login-form1',
-        'layout' => 'horizontal',
+                        </div>
 
-    ]); ?>
+                        <?= Html::submitButton('Login', ['class' => 'btn btn-primary']) ?>
 
-        <?= $form->field($model, 'username')->textInput() ?>
+                       <!-- <a style="padding-left: 5%" href="?r=site/cadastro">Cadastre-se</a> -->
 
-        <?= $form->field($model, 'password')->passwordInput() ?>
+                    <?php ActiveForm::end(); ?>
+                </fieldset>
 
-        
-
-        <div class="form-group">
-            <div class="col-lg-offset-1 col-lg-11">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-
-                <?php ActiveForm::end(); ?>
-                
             </div>
         </div>
-
-
-
-   </div>
-
-    <?php if (Yii::$app->session->hasFlash('cadastroEfetuado')){ ?>
-
-        <div class="alert bg-success" role="alert">
-            <svg class="glyph stroked checkmark"><use xlink:href="#stroked-checkmark"></use></svg>
-            Venda Efetuada Com Sucesso !!!
-        </div>
-
-
-    <?php }?>
     </div>
-
+    </div>
+</div>
+    <!-- /.row -->
