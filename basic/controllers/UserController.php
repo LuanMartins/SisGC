@@ -14,6 +14,8 @@ use yii\filters\VerbFilter;
  */
 class UserController extends Controller
 {
+
+    public $layout = 'newmain';
     /**
      * @inheritdoc
      */

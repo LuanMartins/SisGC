@@ -18,6 +18,8 @@ use yii\db\Query;
 use yii\web\ForbiddenHttpException;
 use yii\data\ActiveDataProvider;
 use app\models\VendaSearch;
+use kartik\mpdf\Pdf;
+
 class SiteController extends Controller
 {
     public $layout = 'newmain';
@@ -72,8 +74,38 @@ class SiteController extends Controller
     public function actionPdf($data){
 
 
+        $venda = Venda::find()->joinWith('compradorIdcomprador')->joinWith('user')->where(['data_venda' => $data])->all();
+        $valorTotal = Venda::find()->joinWith('compradorIdcomprador')->joinWith('user')->where(['data_venda' => $data])->sum('valor');
 
-        return $data;
+
+        $pdf = new Pdf([
+            
+            'mode' => Pdf::MODE_UTF8,
+
+            'format' => Pdf::FORMAT_A4,
+
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+
+            'destination' => Pdf::DEST_BROWSER,
+
+            'content' => $this->renderPartial('templatepdf',['venda' => $venda,'valorTotal' => $valorTotal,'data' => $data]),
+
+            'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+
+            'cssInline' => '.kv-heading-1{font-size:18px}',
+
+            'options' => ['title' => 'Relatório'],
+
+            'methods' => [
+                'SetHeader'=>['SisGC - Sistema de Gerenciamento de Clientes'],
+                'SetFooter'=>['SisGC Copyrights'.date('Y')],
+            ]
+
+            
+        ]);
+        
+
+        return $pdf->render();
 
     }
     public function actionIndex()
@@ -87,15 +119,7 @@ class SiteController extends Controller
             $modelCliente = new Cliente();
 
             $searchModel = new VendaSearch();
-            $dataProvider = new ActiveDataProvider([
-                'query' => Venda::find()->joinWith('compradorIdcomprador')->joinWith('user')->orderBy('data_venda'),
-                'pagination' => [
-                    'pageSize' => 10,
-                ],
-
-
-
-            ]);
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
             return $this->render('index',['model'=>$model,'modelCliente' => $modelCliente,
                 'dataProvider' => $dataProvider,
@@ -182,15 +206,26 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
+        $modelCadastro = new User();
+
+
+        if ($modelCadastro->load(Yii::$app->request->post()) && $modelCadastro->save()) {
+
+            Yii::$app->session->hasFlash('vendaEfetuada');
+
+            return $this->redirect('?r=site/login');
+
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
 
             //$resultados = User::find()->where(['id'=>$model->getId()])->one();
 
             //return $this->render('index',['resultado'=>$resultados]);
-          return $this->redirect('index');
+          return $this->redirect('?r=site/index');
         }
         return $this->render('login', [
-            'model' => $model,
+            'model' => $model,'modelCadastro' => $modelCadastro
         ]);
     }
 

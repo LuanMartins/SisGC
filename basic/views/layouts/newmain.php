@@ -37,7 +37,7 @@ use yii\helpers\Url;
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><span>Lumino</span>Admin</a>
+            <a class="navbar-brand" href="#"><span>SISGC</span> - Sistema de Gerenciamento de Clientes</a>
             <?php if(!Yii::$app->user->isGuest){?>
             <ul class="user-menu">
                 <li class="dropdown pull-right">
@@ -70,12 +70,15 @@ use yii\helpers\Url;
         <li class="active"><a href="index.html"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Dashboard</a></li>
         <li><a href=<?= \yii\helpers\Url::to('index.php?r=site/index')?>><svg class="glyph stroked home""><use xlink:href="#stroked-home"></use></svg> Home</a></li>
         <li><a href=<?= \yii\helpers\Url::to('index.php?r=site/login')?>><svg class="glyph stroked male user"><use xlink:href="#stroked-male-user"></use></svg> Login</a></li>
+        <?php if (!Yii::$app->user->isGuest){?>
+        <li><a href=<?= \yii\helpers\Url::to('?r=user/index')?>><svg class="glyph stroked clipboard with paper"><use xlink:href="#stroked-clipboard-with-paper"/></svg></svg> Gerenciar Vendedores </a></li>
+        <?php }?>
         <li><a href=<?= \yii\helpers\Url::to('index.php?r=site/about')?>><svg class="glyph stroked eye"><use xlink:href="#stroked-eye"></use></svg> Sobre</a></li>
         <li><a href=<?= \yii\helpers\Url::to('index.php?r=site/contact')?>><svg class="glyph stroked two messages"><use xlink:href="#stroked-two-messages"></use></svg> Contato</a></li>
 
     </ul>
 
-    <div class="attribution">Template by <a href="http://www.medialoot.com/item/lumino-admin-bootstrap-template/">Medialoot</a><br/><a href="http://www.glyphs.co" style="color: #333;">Icons by Glyphs</a></div>
+    <div class="attribution"><img src="./logo.png" width="200px"></div>
 </div><!--/.sidebar-->
 
 
@@ -108,6 +111,9 @@ use yii\helpers\Url;
             <div id="rodape">
 
             <a href="luanmartins.esy.es">Luan Martins - Soluções em Desenvolvimento &copy; <?= date('Y') ?> </a>
+
+
+                <img src="./logo.jpg" width="250px" height="140px">
             </div>
         </div>
         </div>
