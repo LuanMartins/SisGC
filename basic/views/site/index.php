@@ -38,7 +38,9 @@ $this->title = 'My Yii Application';
         <br/>
         <br/>
 
-     <div id="botoes">
+    </div>
+
+    <div id="botoes">
         <?php if (isset($model)) { ?>
 
             <?php \yii\bootstrap\Modal::begin([
@@ -49,26 +51,28 @@ $this->title = 'My Yii Application';
                 ],
 
                 'header' => '<h2>Cadastrar Venda</h2>',
-                'toggleButton' => ['class' => 'btn btn-md btn-primary', 'label' => "<i class='fa fa-comments-o'> Realizar Venda </i>"]
+                'toggleButton' => ['class' => 'btn  btn-warning', 'label' => "<i class='fa fa-2x fa-dollar'> Realizar Venda </i>"]
             ]);
 
             ?>
             <?php $form = ActiveForm::begin(['method' => 'post', 'action' => Url::to('index.php?r=venda/create')]); ?>
 
+            
+
 
             <?= $form->field($model,'comprador_idcomprador')->widget(Select2::className(),[
-                    'data' => ArrayHelper::map(Cliente::find()->limit(5)->all(),'idcomprador','nome'),
-                    'options' => ['placeholder' => 'Selecione o Cliente ...'],
-                    'pluginOptions' => [
-                        'allowClear' => true
-                    ],
+                'data' => ArrayHelper::map(Cliente::find()->limit(5)->all(),'idcomprador','nome'),
+                'options' => ['placeholder' => 'Selecione o Cliente ...'],
+                'pluginOptions' => [
+                    'allowClear' => true
+                ],
 
             ]);
-             ?>
+            ?>
             <br/>
             <?= $form->field($model, 'valor') ?>
-            
-            
+
+
 
 
             <div class="form-group">
@@ -85,7 +89,7 @@ $this->title = 'My Yii Application';
 
             <?php \yii\bootstrap\Modal::begin([
                 'header' => '<h2>Cadastro de Cliente</h2>',
-                'toggleButton' => ['class' => 'btn btn-md btn-danger', 'label' => "<i class='fa fa-comments-o'> Cadastra Cliente </i>"]
+                'toggleButton' => ['class' => 'btn btn-danger', 'label' => "<i class='fa fa-2x fa-user'> Cadastrar Cliente </i>"]
             ]);
 
             ?>
@@ -96,7 +100,7 @@ $this->title = 'My Yii Application';
             <?= $form->field($modelCliente, 'apelido')->textInput(['maxlength' => true]) ?>
 
             <div class="form-group">
-                <?= Html::submitButton(Yii::t('app', 'Realizar Venda'), ['class' => 'btn btn-primary']) ?>
+                <?= Html::submitButton(Yii::t('app', 'Realizar Cadastro'), ['class' => 'btn btn-primary']) ?>
             </div>
             <?php ActiveForm::end(); ?>
 
@@ -113,7 +117,7 @@ $this->title = 'My Yii Application';
             \yii\bootstrap\Modal::begin([
 
                 'header' => '<h2>Historico</h2>',
-                'toggleButton' => ['class' => 'btn btn-md btn-default', 'label' => "<i class='fa fa-comments-o'> Historico de Vendas</i>"]
+                'toggleButton' => ['class' => 'btn btn-success', 'label' => "<div style='height: 10px'><i class='fa fa-2x fa-archive'> Historico de Vendas</i></div>"]
 
             ]) ?>
 
@@ -123,22 +127,19 @@ $this->title = 'My Yii Application';
                 'filterModel' => $searchModel,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    [
-                    'label' => 'Vendedor',
-                    'attribute' => '',
-                    'value' => 'user.username'
-                    ],
 
-                    'compradorIdcomprador.nome',
-                    'data_venda',
+                    'nome_vendedor',
+                    'nome_cliente',
+                    'data',
+                    'valor',
+
 
                     ['class' => 'yii\grid\ActionColumn',
 
                         'template' => '{registro}',
                         'buttons' =>[
                             'registro' => function ($url,$model,$key){
-                                return \yii\helpers\Html::a('<i class="glyphicon glyphicon-download">', ['site/pdf', 'data'=>$model->data_venda]);
-
+                                return Html::a('<i class="glyphicon glyphicon-download">',["site/pdf",'dados' => $model->data]);
                             }
 
                         ],
@@ -153,12 +154,10 @@ $this->title = 'My Yii Application';
             <?php \yii\bootstrap\Modal::end();
 
 
-         }?>
+        }?>
 
 
-     </div>
-        </div>
-
+    </div>
     <div class="body-content">
 
 <?php if (Yii::$app->session->hasFlash('contactFormSubmitted')){ ?>
@@ -184,35 +183,6 @@ $this->title = 'My Yii Application';
 
 
 
-        <?php if (!Yii::$app->user->isGuest){?>
-        <div class="row">
-            <div class="col-md-12">
-
-                <legend class="text-info">
-                    <div id="texto">
-                    <small><strong><center>Pesquise Pelo Cliente</center></strong></small>
-                        </div>
-                    </legend>
-
-                <?php $form = ActiveForm::begin(['method' => 'get', 'action' => 'index.php?r=site/pesquisa']); ?>
-
-
-                <div class="input-group">
-                    <?= Html::textInput('nome',null,['class' =>'form-control','placeholder' => 'Digite o Nome ou Apelido']) ?>
-
-                    <div class="input-group-btn">
-                        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                    </div>
-                </div>
-                <?php ActiveForm::end(); ?>
-
-                </div>
-
-            </div>
-
-
-
-<?php }?>
 
     </div>
 </div>

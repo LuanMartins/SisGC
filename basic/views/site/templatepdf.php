@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Bootstrap Example</title>
+    <title>Relatório de Vendas</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -32,8 +32,8 @@
 
         <?php foreach ($venda as $valores){?>
         <tr>
-            <td><?= $valores->user->username ?></td>
-            <td><?= $valores->compradorIdcomprador->nome ?></td>
+            <td><?= $valores->nome_vendedor ?></td>
+            <td><?= $valores->nome_cliente ?></td>
             <td><?= $valores->valor ?> R$</td>
         </tr>
 
@@ -48,7 +48,8 @@
 <div class="row">
     <div class="col-lg-5">
 
-        <h3>Total Vendido:  <?= $valorTotal ?> R$</h3>
+        <h3>Total Vendido Fiado:  <?= $valorTotal ?> R$</h3>
+        <h3>Total Recebido:  <?= $valorFinal ?> R$</h3>
 
         </div>
 

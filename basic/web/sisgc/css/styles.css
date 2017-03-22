@@ -10,6 +10,42 @@ Version 1.0
 /* meus css */
 
 
+.botoes{
+
+	border: solid;
+	width: 21%;
+	height: 300px;
+	background-color: #30a5ff;
+	border-radius: 10%;
+	border-color: #30a5ff;
+	margin-left: 3%;
+}
+
+
+.icone{
+
+	width: 25%;
+	color: white;
+	margin: 0 auto;
+	padding-top: 3%;
+	padding-bottom: 2%;
+}
+
+.icone, .fa-dolar{
+
+	color: #fff;
+}
+#grid{
+
+	margin-left: 2%;
+	margin-right: 2%;
+}
+
+#componente{
+
+	padding-bottom: 5%;
+}
+
 #alerta{
 
 
@@ -19,7 +55,7 @@ Version 1.0
 #login{
 
 
-	margin-top: 10%;
+
 }
 
 #sobre{
@@ -103,10 +139,48 @@ label {
 
 }
 
+
+
 #botoes{
 
-	width: 40%;
+	width: 100%;
 	margin: 0 auto;
+
+
+}
+
+
+.btn-danger{
+
+	border-radius: 3%;
+	height: 300px;
+	width: 33%;
+
+}
+
+.btn-success{
+
+	border-radius: 3%;
+	height: 300px;
+	width: 33%;
+
+}
+
+
+.btn-warning{
+
+	border-radius: 3%;
+	height: 300px;
+	width: 33%;
+
+
+}
+
+
+.body-content{
+
+
+	margin-top: 5%;
 }
 
 #rodape{
@@ -143,7 +217,34 @@ p {
 	color: #777;
 }
 
+.fa:hover{
 
+	color: #30a5ff;
+}
+
+
+
+#tema{
+
+	margin: 0 auto;
+	width: 30%;
+}
+
+#sociais{
+
+	padding-top: 5%;
+	width: 50%;
+	margin-left: 25%;
+
+}
+
+#sociais2{
+
+	padding-top: 5%;
+	width: 100%;
+	margin-left: 25%;
+
+}
 
 a, a:hover, a:focus {
 	color: black;
@@ -233,9 +334,11 @@ h3, h4 {
 
 /*Buttons*/
 
+
+
 a.btn:hover,
 button:hover {
-	opacity: 0.8;
+	opacity: 0.9;
 }
 
 a.btn:active,
@@ -269,6 +372,7 @@ fieldset[disabled] .btn-default.active {
 	border-color: #e9ecf2;
 	color: #1b3548;
 }
+
 
 .btn-primary,
 .btn-primary:hover,

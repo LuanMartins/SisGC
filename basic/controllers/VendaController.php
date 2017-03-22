@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Cliente;
 use app\models\Historico;
+use app\models\User;
 use Yii;
 use app\models\Venda;
 use app\models\VendaSearch;
@@ -12,6 +13,7 @@ use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * VendaController implements the CRUD actions for Venda model.
@@ -24,6 +26,16 @@ class VendaController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['view','update','delete','create'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -39,8 +51,8 @@ class VendaController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new VendaSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            $searchModel = new VendaSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -78,9 +90,14 @@ class VendaController extends Controller
             $model->user_id = Yii::$app->user->getId();
             $model->data_venda = date('d - m - Y');
 
+
+            $idUser = User::findOne(Yii::$app->user->getId());
+            $idCliente = Cliente::findOne($model->comprador_idcomprador);
+
             $modelHistorico->data = date('d - m - Y');
-            $modelHistorico->cliente_idcomprador = $model->comprador_idcomprador;
-            $modelHistorico->user_id = Yii::$app->user->getId();
+            $modelHistorico->nome_cliente = $idCliente->nome;
+            $modelHistorico->nome_vendedor = $idUser->username;
+            $modelHistorico->valor = $model->valor;
 
             if($model->save() && $modelHistorico->save()){
 
@@ -118,7 +135,7 @@ class VendaController extends Controller
             if ($model->save()) {
 
                 Yii::$app->session->setFlash('alteracaoEfetuada');
-                return $this->redirect(Url::to(['site/pesquisa', 'nome' => $_POST['nome']]));
+                return $this->redirect(Url::to(['site/pesquisa']));
             }
         } else {
             throw new ForbiddenHttpException;
@@ -138,7 +155,7 @@ class VendaController extends Controller
 
         Yii::$app->session->setFlash('exclusaoEfetuada');
 
-        return $this->redirect('index.php?r=site/index');
+        return $this->redirect('index.php?r=site/pesquisa');
     }
 
     /**

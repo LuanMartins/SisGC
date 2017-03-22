@@ -22,7 +22,7 @@ use yii\helpers\Url;
         <meta charset="<?= Yii::$app->charset ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <?= Html::csrfMetaTags() ?>
-        <title><?= Html::encode($this->title) ?></title>
+        <title><?= Html::encode($this->title = "SisGC") ?></title>
         <?php $this->head() ?>
     </head>
     <body>
@@ -67,12 +67,24 @@ use yii\helpers\Url;
 
     <br/>
     <ul class="nav menu">
-        <li class="active"><a href="index.html"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Dashboard</a></li>
+        <li class="active"><a href="#"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Dashboard</a></li>
+
+        <?php if (!Yii::$app->user->isGuest){?>
         <li><a href=<?= \yii\helpers\Url::to('index.php?r=site/index')?>><svg class="glyph stroked home""><use xlink:href="#stroked-home"></use></svg> Home</a></li>
+        <?php }?>
+
+        <?php if (Yii::$app->user->isGuest){?>
         <li><a href=<?= \yii\helpers\Url::to('index.php?r=site/login')?>><svg class="glyph stroked male user"><use xlink:href="#stroked-male-user"></use></svg> Login</a></li>
+        <?php }?>
+
+        <?php if (!Yii::$app->user->isGuest){?>
+            <li><a href=<?= \yii\helpers\Url::to('index.php?r=site/pesquisa')?>><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"/></svg>Pesquisar</a></li>
+        <?php }?>
+
         <?php if (!Yii::$app->user->isGuest){?>
         <li><a href=<?= \yii\helpers\Url::to('?r=user/index')?>><svg class="glyph stroked clipboard with paper"><use xlink:href="#stroked-clipboard-with-paper"/></svg></svg> Gerenciar Vendedores </a></li>
         <?php }?>
+
         <li><a href=<?= \yii\helpers\Url::to('index.php?r=site/about')?>><svg class="glyph stroked eye"><use xlink:href="#stroked-eye"></use></svg> Sobre</a></li>
         <li><a href=<?= \yii\helpers\Url::to('index.php?r=site/contact')?>><svg class="glyph stroked two messages"><use xlink:href="#stroked-two-messages"></use></svg> Contato</a></li>
 
