@@ -9,7 +9,7 @@ use yii\bootstrap\Modal;
 /* @var $this yii\web\View */
 /* @var $model app\models\Venda */
 
-$this->title = $model->idcompra;
+$this->title = $model->compradorIdcomprador->nome;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Vendas'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php Modal::begin([
 
             'header' => '<h2>Atualize o Valor</h2>',
-            'toggleButton' => ['class' => 'btn btn-primary', 'label' => "<i class='fa fa-comments-o'> Atualizar </i>"]
+            'toggleButton' => ['class' => 'btn btn-primary', 'label' => "Atualizar"]
 
         ]);
         ?>
@@ -49,13 +49,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
         <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->idcompra], [
-            'class' => 'btn btn-danger',
+            'class' => 'btn btn-secundary',
             'data' => [
                 'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
                 'method' => 'post',
             ],
         ]) ?>
-    </p>
+
+        
 
     <?= DetailView::widget([
         'model' => $model,

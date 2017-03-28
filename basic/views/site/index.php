@@ -139,7 +139,8 @@ $this->title = 'My Yii Application';
                         'template' => '{registro}',
                         'buttons' =>[
                             'registro' => function ($url,$model,$key){
-                                return Html::a('<i class="glyphicon glyphicon-download">',["site/pdf",'dados' => $model->data]);
+                                return Html::a('<i class="glyphicon glyphicon-download">',["site/pdf",'informacao' => $model->data]
+                                ,['data' =>[ 'method' => 'post']]);
                             }
 
                         ],

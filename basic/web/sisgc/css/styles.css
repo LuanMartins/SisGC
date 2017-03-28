@@ -176,7 +176,22 @@ label {
 
 }
 
+.btn-secundary{
 
+
+	background-color: #f9243f;
+	border-color: #f9243f;
+	color: #fff;
+	margin-bottom: 3%;
+
+}
+
+.btn-secundary:hover{
+
+	text-decoration: none;
+	opacity: 0.8;
+
+}
 .body-content{
 
 

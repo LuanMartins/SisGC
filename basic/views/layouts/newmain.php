@@ -48,16 +48,16 @@ use yii\helpers\Url;
                         <?= Html::a('Logout', Url::to(['site/logout']), [
                                 'data-confirm' => "Realmente Quer Sair ?", // <-- confirmation works...
                                 'data-method' => 'post',
-                                'data-params' => 'myParam=anyValue',
-                                'class' => '<svg class="glyph stroked cancel"</svg> ',
+
+
                             ]
                         );
                         ?>
                         </li>
                     </ul>
                 </li>
-                <?php } ?>
             </ul>
+            <?php } ?>
         </div>
 
     </div><!-- /.container-fluid -->

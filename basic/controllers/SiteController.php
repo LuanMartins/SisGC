@@ -73,12 +73,12 @@ class SiteController extends Controller
      * @return string
      */
 
-    public function actionPdf($dados){
+    public function actionPdf($informacao){
 
 
-        $venda = Historico::find()->where(['data' => $dados])->all();
-        $valorTotal = Historico::find()->where(['data' => $dados])->sum('valor');
-        $valorRecebido = Venda::find()->where(['data_venda' => $dados])->sum('valor');
+        $venda = Historico::find()->where(['data' => $informacao])->all();
+        $valorTotal = Historico::find()->where(['data' => $informacao])->sum('valor');
+        $valorRecebido = Venda::find()->where(['data_venda' => $informacao])->sum('valor');
 
         $valorFinal = $valorTotal - $valorRecebido;
 
@@ -94,7 +94,7 @@ class SiteController extends Controller
             'destination' => Pdf::DEST_BROWSER,
 
             'content' => $this->renderPartial('templatepdf',['venda' => $venda
-                ,'valorTotal' => $valorTotal,'data' => $dados,
+                ,'valorTotal' => $valorTotal,'data' => $informacao,
                 'valorFinal' => $valorFinal]),
 
             'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
@@ -180,6 +180,7 @@ class SiteController extends Controller
                 );
 
                 $valorTotal = Venda::find()->joinWith('compradorIdcomprador')->where(['apelido' => $_POST['nome']])->sum('valor');
+                
 
             }
             //return $dataProvider;

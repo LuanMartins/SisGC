@@ -107,7 +107,7 @@ use yii\helpers\Html;
             <div class="col-md-12">
 
 
-               <h1> Valor Total </h1> <p><?= isset($valorTotal)? $valorTotal : 0?> R$</p>
+               <h1> Valor Total </h1> <p><?= isset($valorTotal)? round($valorTotal,10) : 0?> R$</p>
 
             </div>
         </div>
