@@ -20,7 +20,9 @@ return[
     "Create Cidade" => "Criar Cidade",
     "Create Estado" => "Criar Estado",
     "Submit" => "Enviar",
-    "Create" => "Criar"
+    "Create" => "Criar",
+    "Create User" => "Criar Usuário",
+    'Users' => 'Usuários'
 
 
 

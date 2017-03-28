@@ -15,6 +15,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="row">
 
     <div id="login">
+
+        <div id="tema">
+        <img src="./logo.png" width="350px">
+            </div>
+
     <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
         <div class="login-panel panel panel-default">
             <div class="panel-heading">Entrar</div>
@@ -26,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <fieldset>
                         <div class="form-group">
-                            <?= $form->field($model, 'username')->textInput(['class'=>'form-control','placeholder'=>'vendedor','autoFocus' => true])->label(false) ?>
+                            <?= $form->field($model, 'username')->textInput(['class'=>'form-control','placeholder'=>'vendedor'])->label(false) ?>
                         </div>
                         <div class="form-group">
                             <?= $form->field($model, 'password')->passwordInput(['class' => 'form-control','placeholder' => 'senha'])->label(false) ?>

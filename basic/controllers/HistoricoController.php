@@ -3,17 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Cliente;
-use app\models\ClienteSearch;
+use app\models\Historico;
+use app\models\HistoricoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 
 /**
- * ClienteController implements the CRUD actions for Cliente model.
+ * HistoricoController implements the CRUD actions for Historico model.
  */
-class ClienteController extends Controller
+class HistoricoController extends Controller
 {
     /**
      * @inheritdoc
@@ -21,16 +20,6 @@ class ClienteController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['create'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -41,12 +30,12 @@ class ClienteController extends Controller
     }
 
     /**
-     * Lists all Cliente models.
+     * Lists all Historico models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ClienteSearch();
+        $searchModel = new HistoricoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -56,7 +45,7 @@ class ClienteController extends Controller
     }
 
     /**
-     * Displays a single Cliente model.
+     * Displays a single Historico model.
      * @param integer $id
      * @return mixed
      */
@@ -68,18 +57,16 @@ class ClienteController extends Controller
     }
 
     /**
-     * Creates a new Cliente model.
+     * Creates a new Historico model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Cliente();
+        $model = new Historico();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->redirect(['site/index']);
+            return $this->redirect(['view', 'id' => $model->idhistorico]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -88,7 +75,7 @@ class ClienteController extends Controller
     }
 
     /**
-     * Updates an existing Cliente model.
+     * Updates an existing Historico model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -98,7 +85,7 @@ class ClienteController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idcomprador]);
+            return $this->redirect(['view', 'id' => $model->idhistorico]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -107,7 +94,7 @@ class ClienteController extends Controller
     }
 
     /**
-     * Deletes an existing Cliente model.
+     * Deletes an existing Historico model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -120,15 +107,15 @@ class ClienteController extends Controller
     }
 
     /**
-     * Finds the Cliente model based on its primary key value.
+     * Finds the Historico model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Cliente the loaded model
+     * @return Historico the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Cliente::findOne($id)) !== null) {
+        if (($model = Historico::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

@@ -3,6 +3,8 @@
 namespace app\controllers;
 
 use app\models\Cliente;
+use app\models\Historico;
+use app\models\HistoricoSearch;
 use app\models\User;
 use app\models\Venda;
 use kartik\form\ActiveField;
@@ -71,11 +73,14 @@ class SiteController extends Controller
      * @return string
      */
 
-    public function actionPdf($data){
+    public function actionPdf($informacao){
 
 
-        $venda = Venda::find()->joinWith('compradorIdcomprador')->joinWith('user')->where(['data_venda' => $data])->all();
-        $valorTotal = Venda::find()->joinWith('compradorIdcomprador')->joinWith('user')->where(['data_venda' => $data])->sum('valor');
+        $venda = Historico::find()->where(['data' => $informacao])->all();
+        $valorTotal = Historico::find()->where(['data' => $informacao])->sum('valor');
+        $valorRecebido = Venda::find()->where(['data_venda' => $informacao])->sum('valor');
+
+        $valorFinal = $valorTotal - $valorRecebido;
 
 
         $pdf = new Pdf([
@@ -88,7 +93,9 @@ class SiteController extends Controller
 
             'destination' => Pdf::DEST_BROWSER,
 
-            'content' => $this->renderPartial('templatepdf',['venda' => $venda,'valorTotal' => $valorTotal,'data' => $data]),
+            'content' => $this->renderPartial('templatepdf',['venda' => $venda
+                ,'valorTotal' => $valorTotal,'data' => $informacao,
+                'valorFinal' => $valorFinal]),
 
             'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
 
@@ -98,7 +105,7 @@ class SiteController extends Controller
 
             'methods' => [
                 'SetHeader'=>['SisGC - Sistema de Gerenciamento de Clientes'],
-                'SetFooter'=>['SisGC Copyrights'.date('Y')],
+                'SetFooter'=>['SisGC Copyrights '.date('Y')],
             ]
 
             
@@ -118,7 +125,7 @@ class SiteController extends Controller
             $model = new Venda();
             $modelCliente = new Cliente();
 
-            $searchModel = new VendaSearch();
+            $searchModel = new HistoricoSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
             return $this->render('index',['model'=>$model,'modelCliente' => $modelCliente,
@@ -128,20 +135,22 @@ class SiteController extends Controller
 
         }
 
-        return $this->render('index');
+        //return $this->render('index');
     }
 
 
-    public function actionPesquisa($nome){
+    
+    
+    public function actionPesquisa(){
+        
 
 
-
-        if(Yii::$app->request->get()) {
+        if(Yii::$app->request->post()) {
 
             
 
             $dataProvider = new ActiveDataProvider(
-                ['query' => Venda::find()->joinWith('compradorIdcomprador')->where(['nome' => $nome]),
+                ['query' => Venda::find()->joinWith('compradorIdcomprador')->where(['nome' => $_POST['nome']]),
                     'pagination' => [
                         'pageSize' => 10,
                     ],
@@ -153,7 +162,7 @@ class SiteController extends Controller
 
             $model = new Venda();
 
-            $valorTotal = Venda::find()->joinWith('compradorIdcomprador')->where(['like','nome',$nome])->sum('valor');
+            $valorTotal = Venda::find()->joinWith('compradorIdcomprador')->where(['like','nome',$_POST['nome']])->sum('valor');
 
 
             //return var_dump($valorTotal);
@@ -161,7 +170,7 @@ class SiteController extends Controller
             if($dataProvider->count == 0){
 
                 $dataProvider = new ActiveDataProvider(
-                    ['query' => Venda::find()->joinWith('compradorIdcomprador')->where(['like','apelido',$nome]),
+                    ['query' => Venda::find()->joinWith('compradorIdcomprador')->where(['like','apelido',$_POST['nome']]),
                         'pagination' => [
                           'pageSize' => 10,
                         ],
@@ -170,17 +179,16 @@ class SiteController extends Controller
                     ]
                 );
 
-                $valorTotal = Venda::find()->joinWith('compradorIdcomprador')->where(['apelido' => $nome])->sum('valor');
+                $valorTotal = Venda::find()->joinWith('compradorIdcomprador')->where(['apelido' => $_POST['nome']])->sum('valor');
+                
 
             }
             //return $dataProvider;
 
            return $this->render('resultados',['dataProvider'=>$dataProvider,'valorTotal'=>$valorTotal,'model' => $model]);
-        }else{
-
-
-            throw new ForbiddenHttpException;
         }
+
+        return $this->render('resultados');
 
     }
     
