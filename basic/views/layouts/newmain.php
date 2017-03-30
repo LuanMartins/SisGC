@@ -119,14 +119,31 @@ use yii\helpers\Url;
     <!--/.row-->
     <footer>
     <div class="row">
-        <div class="col-lg-12">
+
             <div id="rodape">
 
             <a href="luanmartins.esy.es">Luan Martins - Soluções em Desenvolvimento &copy; <?= date('Y') ?> </a>
 
-
                 <img src="./logo.jpg" width="250px" height="140px">
+
+                <div class="icones-contact">
+                <div class="row">
+                    <div id="sociais">
+                        <div class="col-xs-3 text-center">
+                            <a><i class="fa fa-2x fa-fw fa-instagram"></i></a>
+                        </div>
+                        <div class="col-xs-3">
+                            <a><i class="fa fa-2x fa-fw fa-twitter-square"></i></a>
+                        </div>
+                        <div class="col-xs-3"> <a href="httpa://www.facebook.com"><i class="fa fa-2x fa-fw fa-facebook-square"></i></a>
+                        </div>
+                        <div class="col-xs-3 text-center"> <a><i class="fa fa-2x fa-fw fa-github-square"></i></a>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+
         </div>
         </div>
         </footer>

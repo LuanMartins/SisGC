@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="col-xs-3">
                 <a><i class="fa fa-5x fa-fw fa-twitter-square"></i></a>
             </div>
-            <div class="col-xs-3"> <a><i class="fa fa-5x fa-fw fa-facebook-square"></i></a>
+            <div class="col-xs-3"> <a href="httpa://www.facebook.com"><i class="fa fa-5x fa-fw fa-facebook-square"></i></a>
             </div>
             <div class="col-xs-3 text-center"> <a><i class="fa fa-5x fa-fw fa-github-square"></i></a>
             </div>
@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row text-center">
         <div id="sociais2">
             <div class="col-xs-3 text-center">
-                <a><i class="fa fa-5x fa-fw fa-mobile-phone"></i><center>(99)99999-9999</center></a>
+                <a><i class="fa fa-5x fa-fw fa-mobile-phone"></i><center>(84)9-9980-7136</center></a>
             </div>
             <div class="col-xs-3">
                 <a><i class="fa fa-5x fa-fw fa-envelope"></i><center> luan_18martins@hotmail.com</center></a>
