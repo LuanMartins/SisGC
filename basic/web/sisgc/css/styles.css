@@ -9,6 +9,17 @@ Version 1.0
 
 /* meus css */
 
+.icones-contact{
+
+
+
+	width: 50%;
+	height:70px;
+	margin-top: -6%;
+	padding-bottom: 3%;
+
+}
+
 
 .botoes{
 
@@ -208,8 +219,10 @@ label {
 	font-style: normal;
 	font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
 	margin-top: 25%;
+	padding-top: 3%;
 	padding-left: 10%;
 	position: absolute;
+
 
 
 }
@@ -247,9 +260,10 @@ p {
 
 #sociais{
 
-	padding-top: 5%;
+	padding-top: 1%;
 	width: 50%;
 	margin-left: 25%;
+
 
 }
 
