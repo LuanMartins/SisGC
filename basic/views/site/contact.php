@@ -43,9 +43,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="col-xs-3">
                 <a><i class="fa fa-5x fa-fw fa-twitter-square"></i></a>
             </div>
-            <div class="col-xs-3"> <a href="httpa://www.facebook.com"><i class="fa fa-5x fa-fw fa-facebook-square"></i></a>
+            <div class="col-xs-3"> <a href="https://www.facebook.com/profile.php?id=100010255509766"><i class="fa fa-5x fa-fw fa-facebook-square"></i></a>
             </div>
-            <div class="col-xs-3 text-center"> <a><i class="fa fa-5x fa-fw fa-github-square"></i></a>
+            <div class="col-xs-3 text-center"> <a href="https://github.com/LuanMartins"><i class="fa fa-5x fa-fw fa-github-square"></i></a>
             </div>
                 </div>
         </div>
