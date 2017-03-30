@@ -22,7 +22,7 @@ use yii\helpers\Url;
         <meta charset="<?= Yii::$app->charset ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <?= Html::csrfMetaTags() ?>
-        <title><?= Html::encode($this->title) ?></title>
+        <title><?= Html::encode($this->title = "SisGC") ?></title>
         <?php $this->head() ?>
     </head>
     <body>
@@ -48,16 +48,16 @@ use yii\helpers\Url;
                         <?= Html::a('Logout', Url::to(['site/logout']), [
                                 'data-confirm' => "Realmente Quer Sair ?", // <-- confirmation works...
                                 'data-method' => 'post',
-                                'data-params' => 'myParam=anyValue',
-                                'class' => '<svg class="glyph stroked cancel"</svg> ',
+
+
                             ]
                         );
                         ?>
                         </li>
                     </ul>
                 </li>
-                <?php } ?>
             </ul>
+            <?php } ?>
         </div>
 
     </div><!-- /.container-fluid -->
@@ -67,12 +67,24 @@ use yii\helpers\Url;
 
     <br/>
     <ul class="nav menu">
-        <li class="active"><a href="index.html"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Dashboard</a></li>
+        <li class="active"><a href="#"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Dashboard</a></li>
+
+        <?php if (!Yii::$app->user->isGuest){?>
         <li><a href=<?= \yii\helpers\Url::to('index.php?r=site/index')?>><svg class="glyph stroked home""><use xlink:href="#stroked-home"></use></svg> Home</a></li>
+        <?php }?>
+
+        <?php if (Yii::$app->user->isGuest){?>
         <li><a href=<?= \yii\helpers\Url::to('index.php?r=site/login')?>><svg class="glyph stroked male user"><use xlink:href="#stroked-male-user"></use></svg> Login</a></li>
+        <?php }?>
+
+        <?php if (!Yii::$app->user->isGuest){?>
+            <li><a href=<?= \yii\helpers\Url::to('index.php?r=site/pesquisa')?>><svg class="glyph stroked pencil"><use xlink:href="#stroked-pencil"/></svg>Pesquisar</a></li>
+        <?php }?>
+
         <?php if (!Yii::$app->user->isGuest){?>
         <li><a href=<?= \yii\helpers\Url::to('?r=user/index')?>><svg class="glyph stroked clipboard with paper"><use xlink:href="#stroked-clipboard-with-paper"/></svg></svg> Gerenciar Vendedores </a></li>
         <?php }?>
+
         <li><a href=<?= \yii\helpers\Url::to('index.php?r=site/about')?>><svg class="glyph stroked eye"><use xlink:href="#stroked-eye"></use></svg> Sobre</a></li>
         <li><a href=<?= \yii\helpers\Url::to('index.php?r=site/contact')?>><svg class="glyph stroked two messages"><use xlink:href="#stroked-two-messages"></use></svg> Contato</a></li>
 
@@ -107,14 +119,31 @@ use yii\helpers\Url;
     <!--/.row-->
     <footer>
     <div class="row">
-        <div class="col-lg-12">
+
             <div id="rodape">
 
             <a href="luanmartins.esy.es">Luan Martins - Soluções em Desenvolvimento &copy; <?= date('Y') ?> </a>
 
-
                 <img src="./logo.jpg" width="250px" height="140px">
+
+                <div class="icones-contact">
+                <div class="row">
+                    <div id="sociais">
+                        <div class="col-xs-3 text-center">
+                            <a><i class="fa fa-2x fa-fw fa-instagram"></i></a>
+                        </div>
+                        <div class="col-xs-3">
+                            <a><i class="fa fa-2x fa-fw fa-twitter-square"></i></a>
+                        </div>
+                        <div class="col-xs-3"> <a href="httpa://www.facebook.com"><i class="fa fa-2x fa-fw fa-facebook-square"></i></a>
+                        </div>
+                        <div class="col-xs-3 text-center"> <a><i class="fa fa-2x fa-fw fa-github-square"></i></a>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+
         </div>
         </div>
         </footer>

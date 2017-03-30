@@ -58,7 +58,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 
     public function beforeSave($insert)
     {
-        $this->senha = sha1($this->senha);
+        $this->password = sha1($this->password);
 
 
         return parent::beforeSave($insert);

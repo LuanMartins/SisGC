@@ -9,11 +9,9 @@ use Yii;
  *
  * @property integer $idhistorico
  * @property string $data
- * @property integer $user_id
- * @property integer $cliente_idcomprador
- *
- * @property Cliente $clienteIdcomprador
- * @property User $user
+ * @property string $nome_vendedor
+ * @property string $nome_cliente
+ * @property double $valor
  */
 class Historico extends \yii\db\ActiveRecord
 {
@@ -31,11 +29,10 @@ class Historico extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['data', 'user_id', 'cliente_idcomprador'], 'required'],
-            [['user_id', 'cliente_idcomprador'], 'integer'],
+            [['data', 'nome_vendedor', 'nome_cliente', 'valor'], 'required'],
+            [['valor'], 'number'],
             [['data'], 'string', 'max' => 45],
-            [['cliente_idcomprador'], 'exist', 'skipOnError' => true, 'targetClass' => Cliente::className(), 'targetAttribute' => ['cliente_idcomprador' => 'idcomprador']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['nome_vendedor', 'nome_cliente'], 'string', 'max' => 100],
         ];
     }
 
@@ -47,24 +44,9 @@ class Historico extends \yii\db\ActiveRecord
         return [
             'idhistorico' => Yii::t('app', 'Idhistorico'),
             'data' => Yii::t('app', 'Data'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'cliente_idcomprador' => Yii::t('app', 'Cliente Idcomprador'),
+            'nome_vendedor' => Yii::t('app', 'Nome Vendedor'),
+            'nome_cliente' => Yii::t('app', 'Nome Cliente'),
+            'valor' => Yii::t('app', 'Valor'),
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getClienteIdcomprador()
-    {
-        return $this->hasOne(Cliente::className(), ['idcomprador' => 'cliente_idcomprador']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUser()
-    {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 }

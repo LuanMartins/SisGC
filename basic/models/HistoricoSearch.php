@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Venda;
+use app\models\Historico;
 
 /**
- * VendaSearch represents the model behind the search form about `app\models\Venda`.
+ * HistoricoSearch represents the model behind the search form about `app\models\Historico`.
  */
-class VendaSearch extends Venda
+class HistoricoSearch extends Historico
 {
     /**
      * @inheritdoc
@@ -18,9 +18,9 @@ class VendaSearch extends Venda
     public function rules()
     {
         return [
-            [['idcompra', 'comprador_idcomprador', 'user_id'], 'integer'],
+            [['idhistorico'], 'integer'],
+            [['data', 'nome_vendedor', 'nome_cliente'], 'safe'],
             [['valor'], 'number'],
-            [['data_venda'], 'safe'],
         ];
     }
 
@@ -42,17 +42,12 @@ class VendaSearch extends Venda
      */
     public function search($params)
     {
-        $query = Venda::find();
+        $query = Historico::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => [
-
-                'pageSize' => 10,
-
-            ]
         ]);
 
         $this->load($params);
@@ -64,7 +59,14 @@ class VendaSearch extends Venda
         }
 
         // grid filtering conditions
-      
+        $query->andFilterWhere([
+            'idhistorico' => $this->idhistorico,
+            'valor' => $this->valor,
+        ]);
+
+        $query->andFilterWhere(['like', 'data', $this->data])
+            ->andFilterWhere(['like', 'nome_vendedor', $this->nome_vendedor])
+            ->andFilterWhere(['like', 'nome_cliente', $this->nome_cliente]);
 
         return $dataProvider;
     }

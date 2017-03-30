@@ -18,6 +18,7 @@ class SisgcAsset extends AssetBundle
     public $baseUrl = '@web/sisgc';
     public $css = [
         'css/styles.css',
+        'css/font-awesome.min.css'
     ];
     public $js = [
         'js/lumino.glyphs.js',

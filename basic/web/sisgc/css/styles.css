@@ -9,6 +9,91 @@ Version 1.0
 
 /* meus css */
 
+.icones-contact{
+
+
+
+	width: 50%;
+	height:70px;
+	margin-top: -6%;
+	padding-bottom: 3%;
+
+}
+
+
+.botoes{
+
+	border: solid;
+	width: 21%;
+	height: 300px;
+	background-color: #30a5ff;
+	border-radius: 10%;
+	border-color: #30a5ff;
+	margin-left: 3%;
+}
+
+
+.icone{
+
+	width: 25%;
+	color: white;
+	margin: 0 auto;
+	padding-top: 3%;
+	padding-bottom: 2%;
+}
+
+.icone, .fa-dolar{
+
+	color: #fff;
+}
+#grid{
+
+	margin-left: 2%;
+	margin-right: 2%;
+}
+
+#componente{
+
+	padding-bottom: 5%;
+}
+
+#alerta{
+
+
+	margin-top: 40%;
+}
+
+#login{
+
+
+
+}
+
+#sobre{
+
+	margin-top: 5%;
+	padding-left: 22%;
+	width: 100%;
+
+}
+
+
+
+#imagem{
+
+	margin-top: 10%;
+	margin-left: 64%;
+}
+
+.centralizar{
+
+
+
+	margin-left: 62%;
+	margin-top: 3%;
+	width: 50%;
+
+}
 
 .buttons{
 
@@ -65,10 +150,63 @@ label {
 
 }
 
+
+
 #botoes{
 
-	width: 40%;
+	width: 100%;
 	margin: 0 auto;
+
+
+}
+
+
+.btn-danger{
+
+	border-radius: 3%;
+	height: 300px;
+	width: 33%;
+
+}
+
+.btn-success{
+
+	border-radius: 3%;
+	height: 300px;
+	width: 33%;
+
+}
+
+
+.btn-warning{
+
+	border-radius: 3%;
+	height: 300px;
+	width: 33%;
+
+
+}
+
+.btn-secundary{
+
+
+	background-color: #f9243f;
+	border-color: #f9243f;
+	color: #fff;
+	margin-bottom: 3%;
+
+}
+
+.btn-secundary:hover{
+
+	text-decoration: none;
+	opacity: 0.8;
+
+}
+.body-content{
+
+
+	margin-top: 5%;
 }
 
 #rodape{
@@ -81,7 +219,10 @@ label {
 	font-style: normal;
 	font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
 	margin-top: 25%;
+	padding-top: 3%;
 	padding-left: 10%;
+	position: absolute;
+
 
 
 }
@@ -104,7 +245,35 @@ p {
 	color: #777;
 }
 
+.fa:hover{
 
+	color: #30a5ff;
+}
+
+
+
+#tema{
+
+	margin: 0 auto;
+	width: 30%;
+}
+
+#sociais{
+
+	padding-top: 1%;
+	width: 50%;
+	margin-left: 25%;
+
+
+}
+
+#sociais2{
+
+	padding-top: 5%;
+	width: 100%;
+	margin-left: 25%;
+
+}
 
 a, a:hover, a:focus {
 	color: black;
@@ -194,9 +363,11 @@ h3, h4 {
 
 /*Buttons*/
 
+
+
 a.btn:hover,
 button:hover {
-	opacity: 0.8;
+	opacity: 0.9;
 }
 
 a.btn:active,
@@ -230,6 +401,7 @@ fieldset[disabled] .btn-default.active {
 	border-color: #e9ecf2;
 	color: #1b3548;
 }
+
 
 .btn-primary,
 .btn-primary:hover,
