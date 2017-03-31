@@ -129,18 +129,20 @@ class VendaController extends Controller
     {
 
         $model = $this->findModel($_POST['id']);
-
+        $valorAntigo = Venda::findOne($_POST['id']);
+        
         if ($model->load(Yii::$app->request->post())) {
             $model->data_venda = date('d - m - Y');
+            $model->valor = $valorAntigo->valor - $model->valor;
             if ($model->save()) {
 
                 Yii::$app->session->setFlash('alteracaoEfetuada');
                 return $this->redirect(Url::to(['site/pesquisa']));
             }
-        } else {
+        } 
+        
             throw new ForbiddenHttpException;
-
-        }
+            
     }
 
     /**

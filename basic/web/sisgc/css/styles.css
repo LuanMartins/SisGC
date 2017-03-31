@@ -154,9 +154,8 @@ label {
 
 #botoes{
 
-	width: 100%;
+	width: 70%;
 	margin: 0 auto;
-
 
 }
 
@@ -164,16 +163,16 @@ label {
 .btn-danger{
 
 	border-radius: 3%;
-	height: 300px;
-	width: 33%;
+	height: 250px;
+	width: auto;
 
 }
 
 .btn-success{
 
 	border-radius: 3%;
-	height: 300px;
-	width: 33%;
+	height: 250px;
+	width: auto;
 
 }
 
@@ -181,8 +180,8 @@ label {
 .btn-warning{
 
 	border-radius: 3%;
-	height: 300px;
-	width: 33%;
+	height: 250px;
+	width: auto;
 
 
 }
@@ -892,11 +891,14 @@ a.bg-danger:hover {
 /*Breadcrumbs*/
 
 .breadcrumb {
+	height: 50px;
 	border-radius: 0;
 	padding: 10px 15px;
 	background: #e9ecf2;
 	box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
 	margin: 0 ;
+	margin-bottom: 1%;
+
 }
 
 h1.page-header {

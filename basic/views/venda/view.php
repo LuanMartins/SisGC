@@ -19,7 +19,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 
+
     <p>
+        <div class="input-group">
         <?php Modal::begin([
 
             'header' => '<h2>Atualize o Valor</h2>',
@@ -56,7 +58,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
 
-        
+        </div>
+        </p>
 
     <?= DetailView::widget([
         'model' => $model,
