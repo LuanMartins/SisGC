@@ -150,7 +150,7 @@ class SiteController extends Controller
             
 
             $dataProvider = new ActiveDataProvider(
-                ['query' => Venda::find()->joinWith('compradorIdcomprador')->where(['nome' => $_POST['nome']]),
+                ['query' => Venda::find()->joinWith('compradorIdcomprador')->where(['like','nome',$_POST['nome']]),
                     'pagination' => [
                         'pageSize' => 10,
                     ],
