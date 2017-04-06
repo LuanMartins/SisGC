@@ -3,7 +3,8 @@
 /* @var $this yii\web\View */
 use yii\helpers\Html;
 //use yii\widgets\ActiveForm;
-use yii\widgets\ActiveForm;
+use kartik\widgets\ActiveForm;
+use kartik\builder\Form;
 use yii\helpers\Url;
 use kartik\widgets\Select2;
 use yii\web\JsExpression;
@@ -88,16 +89,94 @@ $this->title = 'My Yii Application';
         <?php if (isset($modelCliente)) { ?>
 
             <?php \yii\bootstrap\Modal::begin([
+
+
+                'size' => \yii\bootstrap\Modal::SIZE_DEFAULT,
                 'header' => '<h2>Cadastro de Cliente</h2>',
                 'toggleButton' => ['class' => 'btn btn-danger', 'label' => "<i class='fa fa-2x fa-user'> Cadastrar Cliente </i>"]
             ]);
 
+
+
             ?>
             <?php $form = ActiveForm::begin(['id'=> $model->formName(),'method' => 'post', 'action' => 'index.php?r=cliente%2Fcreate']); ?>
 
-            <?= $form->field($modelCliente, 'nome')->textInput(['maxlength' => true]) ?>
 
-            <?= $form->field($modelCliente, 'apelido')->textInput(['maxlength' => true]) ?>
+
+
+            <?php echo Form::widget([
+            'model'=>$modelCliente,
+            'form'=>$form,
+                'contentBefore' => '<legend class="text-info"><small>Dados Pessoais</small></legend>',
+            'columns'=>3,
+            'attributes'=>[       // 2 column layout
+            'nome'=>['type'=>Form::INPUT_TEXT, 'options'=>['placeholder'=>'Nome do Cliente','maxlength' => true]],
+            'apelido'=>['type'=>Form::INPUT_TEXT, 'options'=>['placeholder' => 'Apelido do Cliente (opcional)','maxlength' => true]],
+            'cpf' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => \yii\widgets\MaskedInput::className(), 'options'=>[
+
+
+                'mask' => '99.999.999-99',
+                ],
+            ]
+            ]
+            ]);
+
+            ?>
+
+
+            <?php echo Form::widget([
+                'model'=>$modelCliente,
+                'form'=>$form,
+                'columns'=>2,
+                'attributes'=>[       // 2 column layout
+
+                    'telefone' => ['type' => Form::INPUT_WIDGET,'widgetClass' => \yii\widgets\MaskedInput::className(),'options' =>[
+
+                        'mask' => '(999)9-9999-9999',
+                    ]],
+
+                    'limite_credito' => ['type' => Form::INPUT_TEXT, 'options'=>['placeholder' => 'Telefone do Cliente','maxlength' => true]],
+
+                ]
+            ]);
+
+            ?>
+
+
+            <?php echo Form::widget([
+                'model'=>$modelCliente,
+                'form'=>$form,
+                'contentBefore' => '<legend class="text-info"><small>Endereço</small></legend>',
+                'columns'=>2,
+                'attributes'=>[       // 2 column layout
+
+                    'cep' => ['id' => 'cep', 'type' => Form::INPUT_WIDGET, 'widgetClass' => \yii\widgets\MaskedInput::className(), 'options'=>[
+
+                        'mask' => '99999-999',
+
+                    ]],
+                    'rua' => ['id' => 'rua','type' => Form::INPUT_TEXT, 'options'=>['maxlength' => true]],
+
+
+                ]
+            ]);
+
+            ?>
+
+            <?php echo Form::widget([
+                'model'=>$modelCliente,
+                'form'=>$form,
+                'columns'=>2,
+                'attributes'=>[       // 2 column layout
+
+                    'bairro' => ['id' => 'bairro','type' => Form::INPUT_TEXT, 'options'=>['maxlength' => true]],
+                    'numero_casa' => ['type' => Form::INPUT_TEXT, 'options'=>['placeholder' => 'Numero da Casa','maxlength' => true]],
+
+
+                ]
+            ]);
+
+            ?>
 
             <div class="form-group">
                 <?= Html::submitButton(Yii::t('app', 'Realizar Cadastro'), ['class' => 'btn btn-primary']) ?>
@@ -188,9 +267,85 @@ $this->title = 'My Yii Application';
     </div>
 </div>
 
+<?php
+
+$script = <<< JS
+
+      $(document).ready(function() {
+
+            function limpa_formulário_cep() {
+                // Limpa valores do formulário de cep.
+                $("#rua").val("");
+                $("#bairro").val("");
+                
+            }
+            
+            //Quando o campo cep perde o foco.
+            $("#cliente-cep").blur(function() {
+
+                //Nova variável "cep" somente com dígitos.
+                var cep = $(this).val().replace(/\D/g, '');
+
+                //Verifica se campo cep possui valor informado.
+                if (cep != "") {
+
+                    //Expressão regular para validar o CEP.
+                    var validacep = /^[0-9]{8}$/;
+
+                    //Valida o formato do CEP.
+                    if(validacep.test(cep)) {
+
+                        //Preenche os campos com "..." enquanto consulta webservice.
+                        $("#cliente-rua").val("...");
+                        $("#cliente-bairro").val("...");
+                       
+                        //Consulta o webservice viacep.com.br/
+                        $.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+                            if (!("erro" in dados)) {
+                                //Atualiza os campos com os valores da consulta.
+                                $("#cliente-rua").val(dados.logradouro);
+                                $("#cliente-bairro").val(dados.bairro);
+                                
+                               if(dados.rua == null){
+                               
+                               
+                                $("#cliente-rua").val("Rua Não encontrada");
+                               
+                               }
+                               
+                               if(dados.bairo == null){
+                               
+                               
+                                $("#cliente-bairro").val("Bairro Não encontrada");
+                               
+                               }
+                                
+                            } //end if.
+                            else {
+                                //CEP pesquisado não foi encontrado.
+                                limpa_formulário_cep();
+                                alert("CEP não encontrado.");
+                            }
+                        });
+                    } //end if.
+                    else {
+                        //cep é inválido.
+                        limpa_formulário_cep();
+                        alert("Formato de CEP inválido.");
+                    }
+                } //end if.
+                else {
+                    //cep sem valor, limpa formulário.
+                    limpa_formulário_cep();
+                }
+            });
+        });
 
 
+JS;
 
+$this->registerJs($script);
 
-
+?>
 

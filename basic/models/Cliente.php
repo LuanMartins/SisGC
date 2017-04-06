@@ -10,6 +10,13 @@ use Yii;
  * @property integer $idcomprador
  * @property string $nome
  * @property string $apelido
+ * @property string $cpf
+ * @property string $telefone
+ * @property string $rua
+ * @property string $bairro
+ * @property integer $numero_casa
+ * @property double $limite_credito
+ * @property string $cep
  *
  * @property Venda[] $vendas
  */
@@ -29,9 +36,16 @@ class Cliente extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nome'], 'required'],
-            [['nome'], 'string', 'max' => 100],
+            [['nome', 'cpf', 'telefone'], 'required'],
+            [['numero_casa'], 'integer'],
+            [['limite_credito'], 'number'],
+            [['nome', 'bairro'], 'string', 'max' => 100],
             [['apelido'], 'string', 'max' => 45],
+            [['cpf'], 'string', 'max' => 14],
+            [['telefone'], 'string', 'max' => 15],
+            [['rua'], 'string', 'max' => 150],
+            [['cep'], 'string', 'max' => 9],
+            [['cpf'], 'unique'],
         ];
     }
 
@@ -44,6 +58,13 @@ class Cliente extends \yii\db\ActiveRecord
             'idcomprador' => Yii::t('app', 'Idcomprador'),
             'nome' => Yii::t('app', 'Nome'),
             'apelido' => Yii::t('app', 'Apelido'),
+            'cpf' => Yii::t('app', 'Cpf'),
+            'telefone' => Yii::t('app', 'Telefone'),
+            'rua' => Yii::t('app', 'Rua'),
+            'bairro' => Yii::t('app', 'Bairro'),
+            'numero_casa' => Yii::t('app', 'Numero Casa'),
+            'limite_credito' => Yii::t('app', 'Limite Credito'),
+            'cep' => Yii::t('app', 'Cep'),
         ];
     }
 
