@@ -41,6 +41,46 @@ $this->title = 'My Yii Application';
 
     </div>
 
+
+    <div class="body-content">
+
+        <?php if (Yii::$app->session->getFlash('clienteCadastrado')){ ?>
+
+            <div class="alert bg-success" role="alert">
+                <svg class="glyph stroked checkmark"><use xlink:href="#stroked-checkmark"></use></svg>
+                Cliente Cadastrado Com sucesso !!!
+            </div>
+
+
+        <?php }?>
+
+        <?php if (Yii::$app->session->getFlash('valorExcedido')){ ?>
+
+            <div class="alert bg-danger" role="alert">
+                <svg class="glyph stroked checkmark"><use xlink:href="#stroked-checkmark"></use></svg>
+                O cliente não possui mais crédito!!!
+            </div>
+
+
+        <?php }?>
+
+
+
+        <?php if (Yii::$app->session->hasFlash('vendaEfetuada')){ ?>
+
+            <div class="alert bg-success" role="alert">
+                <svg class="glyph stroked checkmark"><use xlink:href="#stroked-checkmark"></use></svg>
+                Venda Efetuada Com Sucesso !!!
+            </div>
+
+
+        <?php }?>
+
+
+
+
+    </div>
+
     <div id="botoes">
         <?php if (isset($model)) { ?>
 
@@ -57,7 +97,6 @@ $this->title = 'My Yii Application';
 
             ?>
             <?php $form = ActiveForm::begin(['method' => 'post', 'action' => Url::to('index.php?r=venda/create')]); ?>
-
             
 
 
@@ -115,7 +154,7 @@ $this->title = 'My Yii Application';
             'cpf' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => \yii\widgets\MaskedInput::className(), 'options'=>[
 
 
-                'mask' => '99.999.999-99',
+                'mask' => '999.999.999-99',
                 ],
             ]
             ]
@@ -133,9 +172,10 @@ $this->title = 'My Yii Application';
                     'telefone' => ['type' => Form::INPUT_WIDGET,'widgetClass' => \yii\widgets\MaskedInput::className(),'options' =>[
 
                         'mask' => '(999)9-9999-9999',
+
                     ]],
 
-                    'limite_credito' => ['type' => Form::INPUT_TEXT, 'options'=>['placeholder' => 'Telefone do Cliente','maxlength' => true]],
+                    'limite_credito' => ['type' => Form::INPUT_TEXT, 'options'=>['class' =>'limite','placeholder' => 'Limite de Crédito','maxlength' => true]],
 
                 ]
             ]);
@@ -238,47 +278,32 @@ $this->title = 'My Yii Application';
 
 
     </div>
-    <div class="body-content">
 
-<?php if (Yii::$app->session->hasFlash('contactFormSubmitted')){ ?>
-
-    <div class="alert bg-success" role="alert">
-        <svg class="glyph stroked checkmark"><use xlink:href="#stroked-checkmark"></use></svg>
-        Cliente Cadastrado Com sucesso !!!
-        </div>
-
-
-<?php }?>
-
-
-        <?php if (Yii::$app->session->hasFlash('vendaEfetuada')){ ?>
-
-            <div class="alert bg-success" role="alert">
-                <svg class="glyph stroked checkmark"><use xlink:href="#stroked-checkmark"></use></svg>
-                Venda Efetuada Com Sucesso !!!
-            </div>
-
-
-        <?php }?>
-
-
-
-
-    </div>
 </div>
 
 <?php
 
 $script = <<< JS
 
+
+ 
       $(document).ready(function() {
 
+          
+          // tentando setar mascara de valor para o campo de id = venda_valor
+          // $("#venda-valor").mask('000.000.000.000.000,00');
+           
+           
             function limpa_formulário_cep() {
                 // Limpa valores do formulário de cep.
                 $("#rua").val("");
                 $("#bairro").val("");
                 
             }
+            
+         
+            $("#cliente-limite_credito").mask('000.000.000.000.000.00',{reverse:true});
+            $("#venda-valor").mask('000.000.000.000.000.00',{reverse:true});
             
             //Quando o campo cep perde o foco.
             $("#cliente-cep").blur(function() {

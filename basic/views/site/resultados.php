@@ -35,7 +35,7 @@ use yii\helpers\Html;
 
 
                         <div class="input-group">
-                            <?= Html::textInput('nome',null,['class' =>'form-control','placeholder' => 'Digite o Nome ou Apelido']) ?>
+                            <?= Html::textInput('nome',null,['class' =>'form-control','placeholder' => 'Digite o Nome ou Apelido','required' => true]) ?>
 
                             <div class="input-group-btn">
                                 <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>

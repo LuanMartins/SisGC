@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use phpDocumentor\Reflection\Types\Float_;
 use Yii;
 
 /**
@@ -70,5 +71,22 @@ class Venda extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+
+    public function verificaLimite($id,$valor){
+
+        $venda = Venda::find()->joinWith('compradorIdcomprador')->where(['idcomprador' => $id])->sum('valor');
+        $limiteCliente = Cliente::findOne($id);
+
+        // converter o valor e $venda para float //
+
+        if($venda + $valor > $limiteCliente->limite_credito){
+
+
+            return false;
+
+        }
+            return true;
     }
 }

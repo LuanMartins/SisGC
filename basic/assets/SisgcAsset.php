@@ -24,6 +24,7 @@ class SisgcAsset extends AssetBundle
         'js/lumino.glyphs.js',
         'js/html5shiv.min.js',
         'js/respond.min.js',
+        'js/jquery.mask.min.js'
         //'js/jquery-1.11.1.min.js',
         //'css/bootstrap.min.css'
     ];

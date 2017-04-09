@@ -42,7 +42,7 @@ class Cliente extends \yii\db\ActiveRecord
             [['nome', 'bairro'], 'string', 'max' => 100],
             [['apelido'], 'string', 'max' => 45],
             [['cpf'], 'string', 'max' => 14],
-            [['telefone'], 'string', 'max' => 15],
+            [['telefone'], 'string', 'max' => 16],
             [['rua'], 'string', 'max' => 150],
             [['cep'], 'string', 'max' => 9],
             [['cpf'], 'unique'],
@@ -75,4 +75,7 @@ class Cliente extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Venda::className(), ['comprador_idcomprador' => 'idcomprador']);
     }
+
+
+    
 }

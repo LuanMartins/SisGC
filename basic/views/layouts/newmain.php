@@ -85,6 +85,10 @@ use yii\helpers\Url;
         <li><a href=<?= \yii\helpers\Url::to('?r=user/index')?>><svg class="glyph stroked clipboard with paper"><use xlink:href="#stroked-clipboard-with-paper"/></svg></svg> Gerenciar Vendedores </a></li>
         <?php }?>
 
+        <?php if (!Yii::$app->user->isGuest){?>
+            <li><a href=<?= \yii\helpers\Url::to('?r=cliente/index')?>><svg class="glyph stroked clipboard with paper"><use xlink:href="#stroked-clipboard-with-paper"/></svg></svg> Gerenciar Clientes </a></li>
+        <?php }?>
+
         <li><a href=<?= \yii\helpers\Url::to('index.php?r=site/about')?>><svg class="glyph stroked eye"><use xlink:href="#stroked-eye"></use></svg> Sobre</a></li>
         <li><a href=<?= \yii\helpers\Url::to('index.php?r=site/contact')?>><svg class="glyph stroked two messages"><use xlink:href="#stroked-two-messages"></use></svg> Contato</a></li>
 

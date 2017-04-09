@@ -18,8 +18,9 @@ class ClienteSearch extends Cliente
     public function rules()
     {
         return [
-            [['idcomprador'], 'integer'],
-            [['nome', 'apelido'], 'safe'],
+            [['idcomprador', 'numero_casa'], 'integer'],
+            [['nome', 'apelido', 'cpf', 'telefone', 'rua', 'bairro', 'cep'], 'safe'],
+            [['limite_credito'], 'number'],
         ];
     }
 
@@ -60,10 +61,17 @@ class ClienteSearch extends Cliente
         // grid filtering conditions
         $query->andFilterWhere([
             'idcomprador' => $this->idcomprador,
+            'numero_casa' => $this->numero_casa,
+            'limite_credito' => $this->limite_credito,
         ]);
 
         $query->andFilterWhere(['like', 'nome', $this->nome])
-            ->andFilterWhere(['like', 'apelido', $this->apelido]);
+            ->andFilterWhere(['like', 'apelido', $this->apelido])
+            ->andFilterWhere(['like', 'cpf', $this->cpf])
+            ->andFilterWhere(['like', 'telefone', $this->telefone])
+            ->andFilterWhere(['like', 'rua', $this->rua])
+            ->andFilterWhere(['like', 'bairro', $this->bairro])
+            ->andFilterWhere(['like', 'cep', $this->cep]);
 
         return $dataProvider;
     }

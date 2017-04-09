@@ -83,6 +83,9 @@ class VendaController extends Controller
     {
         $model = new Venda();
         $modelHistorico = new Historico();
+        
+        
+
 
         if ($model->load(Yii::$app->request->post())) {
 
@@ -93,6 +96,15 @@ class VendaController extends Controller
 
             $idUser = User::findOne(Yii::$app->user->getId());
             $idCliente = Cliente::findOne($model->comprador_idcomprador);
+
+            if(!$model->verificaLimite($idCliente,$model->valor)){
+
+
+                yii::$app->session->setFlash("valorExcedido");
+
+                return $this->redirect('index.php?r=site/index');
+
+            }
 
             $modelHistorico->data = date('d - m - Y');
             $modelHistorico->nome_cliente = $idCliente->nome;
