@@ -13,6 +13,16 @@ use yii\helpers\Html;
 ?>
 
 
+
+ <?php if (Yii::$app->session->getFlash('exclusaoEfetuada')){ ?>
+
+    <div class="alert bg-success text-center" role="alert">
+        <svg class="glyph stroked checkmark"><use xlink:href="#stroked-checkmark"></use></svg>
+       Valor Excluido com Sucesso!!!
+    </div>
+
+    <?php } ?>
+
 <div class="row">
     <div class="col-md-12">
         <br/>
@@ -97,22 +107,28 @@ use yii\helpers\Html;
         <?php \yii\widgets\Pjax::end();
         } ?>
 
-    </div>
+
+</div>
 
     <?php  if(isset($dataProvider)){?>
-    <div id="valor_total">
+
 
         <div class="row">
 
-            <div class="col-md-12">
+            <div class="col-md-4">
 
+                <div id="valor_total">
 
                <h1> Valor Total </h1> <p><?= isset($valorTotal)? round($valorTotal,10) : 0?> R$</p>
 
+                </div>
+
             </div>
+
+
         </div>
 
-    </div>
+
 <?php }?>
 
  

@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Cliente;
 use app\models\Historico;
 use app\models\HistoricoSearch;
+use app\models\Pagamento;
 use app\models\User;
 use app\models\Venda;
 use kartik\form\ActiveField;
@@ -77,8 +78,8 @@ class SiteController extends Controller
 
 
         $venda = Historico::find()->where(['data' => $informacao])->all();
-        $valorTotal = Historico::find()->where(['data' => $informacao])->sum('valor');
-        $valorRecebido = Venda::find()->where(['data_venda' => $informacao])->sum('valor');
+        $valorTotal = Pagamento::find()->where(['data_pagamento' => $informacao])->sum('compra_fiado');
+        $valorRecebido = Pagamento::find()->where(['data_pagamento' => $informacao])->sum('valor_pago');
 
         $valorFinal = $valorTotal - $valorRecebido;
 
@@ -95,7 +96,7 @@ class SiteController extends Controller
 
             'content' => $this->renderPartial('templatepdf',['venda' => $venda
                 ,'valorTotal' => $valorTotal,'data' => $informacao,
-                'valorFinal' => $valorFinal]),
+                'valorRecebido' => $valorRecebido]),
 
             'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
 
@@ -163,6 +164,8 @@ class SiteController extends Controller
             $model = new Venda();
 
             $valorTotal = Venda::find()->joinWith('compradorIdcomprador')->where(['like','nome',$_POST['nome']])->sum('valor');
+
+            $limiteTotal = Venda::find([''])->joinWith('compradorIdcomprador')->where(['like','nome',$_POST['nome']])->sum('valor');
 
 
             //return var_dump($valorTotal);

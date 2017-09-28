@@ -49,7 +49,7 @@
     <div class="col-lg-5">
 
         <h3>Total Vendido Fiado:  <?= $valorTotal ?> R$</h3>
-        <h3>Total Recebido:  <?= $valorFinal ?> R$</h3>
+        <h3>Total Recebido:  <?= $valorRecebido ?> R$</h3>
 
         </div>
 
