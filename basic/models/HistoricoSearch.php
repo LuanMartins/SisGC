@@ -48,6 +48,9 @@ class HistoricoSearch extends Historico
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ]
         ]);
 
         $this->load($params);
@@ -62,6 +65,7 @@ class HistoricoSearch extends Historico
         $query->andFilterWhere([
             'idhistorico' => $this->idhistorico,
             'valor' => $this->valor,
+
         ]);
 
         $query->andFilterWhere(['like', 'data', $this->data])

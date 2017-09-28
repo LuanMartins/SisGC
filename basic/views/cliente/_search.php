@@ -21,6 +21,20 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'apelido') ?>
 
+    <?= $form->field($model, 'cpf') ?>
+
+    <?= $form->field($model, 'telefone') ?>
+
+    <?php // echo $form->field($model, 'rua') ?>
+
+    <?php // echo $form->field($model, 'bairro') ?>
+
+    <?php // echo $form->field($model, 'numero_casa') ?>
+
+    <?php // echo $form->field($model, 'limite_credito') ?>
+
+    <?php // echo $form->field($model, 'cep') ?>
+
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']) ?>

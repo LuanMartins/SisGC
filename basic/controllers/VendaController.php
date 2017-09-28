@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Cliente;
 use app\models\Historico;
+use app\models\Pagamento;
 use app\models\User;
 use Yii;
 use app\models\Venda;
@@ -83,6 +84,10 @@ class VendaController extends Controller
     {
         $model = new Venda();
         $modelHistorico = new Historico();
+        $modelPagamento = new Pagamento();
+        
+        
+
 
         if ($model->load(Yii::$app->request->post())) {
 
@@ -94,12 +99,25 @@ class VendaController extends Controller
             $idUser = User::findOne(Yii::$app->user->getId());
             $idCliente = Cliente::findOne($model->comprador_idcomprador);
 
+            if(!$model->verificaLimite($idCliente,$model->valor)){
+
+
+                yii::$app->session->setFlash("valorExcedido");
+
+                return $this->redirect('index.php?r=site/index');
+
+            }
+
             $modelHistorico->data = date('d - m - Y');
             $modelHistorico->nome_cliente = $idCliente->nome;
             $modelHistorico->nome_vendedor = $idUser->username;
             $modelHistorico->valor = $model->valor;
 
-            if($model->save() && $modelHistorico->save()){
+            $modelPagamento->data_pagamento = date('d - m - Y');
+            $modelPagamento->compra_fiado = $model->valor;
+            $modelPagamento->valor_pago = 0;
+
+            if($model->save() && $modelHistorico->save() && $modelPagamento->save()){
 
                 Yii::$app->session->setFlash('vendaEfetuada');
                 
@@ -151,13 +169,35 @@ class VendaController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete($id,$valor)
     {
-        $this->findModel($id)->delete();
 
-        Yii::$app->session->setFlash('exclusaoEfetuada');
+        $pagamento = new Pagamento();
 
-        return $this->redirect('index.php?r=site/pesquisa');
+        if($this->findModel($id)->delete()){
+
+        $pagamento->data_pagamento = date('d - m - Y');
+        $pagamento->valor_pago = doubleval($valor);
+        $pagamento->compra_fiado = 0;
+
+            if($pagamento->save()) {
+
+
+                Yii::$app->session->setFlash('exclusaoEfetuada');
+
+                return $this->redirect('index.php?r=site/pesquisa');
+
+            }
+
+
+        }
+
+
+
+
+
+
+        return "deu errado";
     }
 
     /**

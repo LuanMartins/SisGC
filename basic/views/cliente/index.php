@@ -15,21 +15,41 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Cliente'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-<?php Pjax::begin(); ?>    
-    <?= GridView::widget([
+    
+<?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'idcomprador',
+            //'idcomprador',
             'nome',
-            'apelido',
+            //'apelido',
+            'cpf',
+            'telefone',
+            // 'rua',
+            // 'bairro',
+            // 'numero_casa',
+             'limite_credito',
+            // 'cep',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-<?php Pjax::end(); ?></div>
+<?php Pjax::end(); ?>
+
+
+
+
+    <?php if (Yii::$app->session->getFlash("alterarCliente")){ ?>
+
+        <div class="alert bg-success text-center" role="alert">
+            <svg class="glyph stroked checkmark"><use xlink:href="#stroked-checkmark"></use></svg>
+            Informação de Cliente Alterada Com Sucesso !!!
+        </div>
+
+    <?php }?>
+
+
+
+</div>

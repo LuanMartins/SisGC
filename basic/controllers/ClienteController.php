@@ -8,29 +8,20 @@ use app\models\ClienteSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 
 /**
  * ClienteController implements the CRUD actions for Cliente model.
  */
 class ClienteController extends Controller
 {
+
+    public $layout = 'newmain';
     /**
      * @inheritdoc
      */
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['create'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -77,15 +68,16 @@ class ClienteController extends Controller
         $model = new Cliente();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
 
-            return $this->redirect(['site/index']);
+            yii::$app->session->setFlash("clienteCadastrado");
+            return $this->redirect('?r=site/index');
         } else {
             return $this->render('create', [
                 'model' => $model,
             ]);
         }
     }
+ 
 
     /**
      * Updates an existing Cliente model.
@@ -98,7 +90,9 @@ class ClienteController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idcomprador]);
+
+            Yii::$app->session->setFlash("alterarCliente");
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,

@@ -41,6 +41,46 @@ $this->title = 'My Yii Application';
 
     </div>
 
+
+    <div class="body-content">
+
+        <?php if (Yii::$app->session->getFlash('clienteCadastrado')){ ?>
+
+            <div class="alert bg-success text-center" role="alert">
+                <svg class="glyph stroked checkmark"><use xlink:href="#stroked-checkmark"></use></svg>
+                Cliente Cadastrado Com sucesso !!!
+            </div>
+
+
+        <?php }?>
+
+        <?php if (Yii::$app->session->getFlash('valorExcedido')){ ?>
+
+            <div class="alert bg-danger text-center" role="alert">
+                <svg class="glyph stroked checkmark"><use xlink:href="#stroked-checkmark"></use></svg>
+                O cliente não possui mais crédito!!!
+            </div>
+
+
+        <?php }?>
+
+
+
+        <?php if (Yii::$app->session->hasFlash('vendaEfetuada')){ ?>
+
+            <div class="alert bg-success text-center" role="alert">
+                <svg class="glyph stroked checkmark"><use xlink:href="#stroked-checkmark"></use></svg>
+                Venda Efetuada Com Sucesso !!!
+            </div>
+
+
+        <?php }?>
+
+
+
+
+    </div>
+
     <div id="botoes">
         <?php if (isset($model)) { ?>
 
@@ -57,7 +97,6 @@ $this->title = 'My Yii Application';
 
             ?>
             <?php $form = ActiveForm::begin(['method' => 'post', 'action' => Url::to('index.php?r=venda/create')]); ?>
-
             
 
 
@@ -115,7 +154,7 @@ $this->title = 'My Yii Application';
             'cpf' => ['type' => Form::INPUT_WIDGET, 'widgetClass' => \yii\widgets\MaskedInput::className(), 'options'=>[
 
 
-                'mask' => '99.999.999-99',
+                'mask' => '999.999.999-99',
                 ],
             ]
             ]
@@ -133,9 +172,10 @@ $this->title = 'My Yii Application';
                     'telefone' => ['type' => Form::INPUT_WIDGET,'widgetClass' => \yii\widgets\MaskedInput::className(),'options' =>[
 
                         'mask' => '(999)9-9999-9999',
+
                     ]],
 
-                    'limite_credito' => ['type' => Form::INPUT_TEXT, 'options'=>['placeholder' => 'Telefone do Cliente','maxlength' => true]],
+                    'limite_credito' => ['type' => Form::INPUT_TEXT, 'options'=>['class' =>'limite','placeholder' => 'Limite de Crédito','maxlength' => true]],
 
                 ]
             ]);
@@ -177,6 +217,14 @@ $this->title = 'My Yii Application';
             ]);
 
             ?>
+
+            <div class="row">
+                <div class="col-md-11 text-center">
+
+                </div>
+
+            </div>
+            <br>
 
             <div class="form-group">
                 <?= Html::submitButton(Yii::t('app', 'Realizar Cadastro'), ['class' => 'btn btn-primary']) ?>
@@ -238,47 +286,33 @@ $this->title = 'My Yii Application';
 
 
     </div>
-    <div class="body-content">
 
-<?php if (Yii::$app->session->hasFlash('contactFormSubmitted')){ ?>
-
-    <div class="alert bg-success" role="alert">
-        <svg class="glyph stroked checkmark"><use xlink:href="#stroked-checkmark"></use></svg>
-        Cliente Cadastrado Com sucesso !!!
-        </div>
-
-
-<?php }?>
-
-
-        <?php if (Yii::$app->session->hasFlash('vendaEfetuada')){ ?>
-
-            <div class="alert bg-success" role="alert">
-                <svg class="glyph stroked checkmark"><use xlink:href="#stroked-checkmark"></use></svg>
-                Venda Efetuada Com Sucesso !!!
-            </div>
-
-
-        <?php }?>
-
-
-
-
-    </div>
 </div>
 
 <?php
 
+
 $script = <<< JS
 
+
+ 
       $(document).ready(function() {
 
+          
+          // tentando setar mascara de valor para o campo de id = venda_valor
+          // $("#venda-valor").mask('000.000.000.000.000,00');
+           
+           
             function limpa_formulário_cep() {
                 // Limpa valores do formulário de cep.
                 $("#rua").val("");
                 $("#bairro").val("");
                 
             }
+            
+         
+            $("#cliente-limite_credito").mask('000.000.000.000.000.00',{reverse:true});
+            $("#venda-valor").mask('000.000.000.000.000.00',{reverse:true});
             
             //Quando o campo cep perde o foco.
             $("#cliente-cep").blur(function() {
@@ -296,6 +330,7 @@ $script = <<< JS
                     if(validacep.test(cep)) {
 
                         //Preenche os campos com "..." enquanto consulta webservice.
+                        $(".col-md-11").html("<div class='alert-warning'><i class='fa fa-spinner fa-pulse fa-3x fa-fw'></i><p> Busncando Informações</p></div>");
                         $("#cliente-rua").val("...");
                         $("#cliente-bairro").val("...");
                        
@@ -306,33 +341,34 @@ $script = <<< JS
                                 //Atualiza os campos com os valores da consulta.
                                 $("#cliente-rua").val(dados.logradouro);
                                 $("#cliente-bairro").val(dados.bairro);
-                                
-                               if(dados.rua == null){
+                                $(".col-md-11").html("<div class='alert-success'><i class='fa fa-3x fa-check'> Sucesso</i></div>");
+                            }   
+                          
+                               if(dados.logradouro == null){
                                
                                
                                 $("#cliente-rua").val("Rua Não encontrada");
                                
                                }
                                
-                               if(dados.bairo == null){
+                               if(dados.bairro == null){
                                
                                
                                 $("#cliente-bairro").val("Bairro Não encontrada");
                                
                                }
                                 
-                            } //end if.
-                            else {
-                                //CEP pesquisado não foi encontrado.
-                                limpa_formulário_cep();
-                                alert("CEP não encontrado.");
-                            }
+                             //end if.
+                            
+                        }).fail(function() {
+                          
+                            $(".col-md-11").html("<div class='alert-danger'><i class='fa fa-3x fa-exclamation-triangle'> Conexão Perdida</i></div>");
                         });
                     } //end if.
                     else {
                         //cep é inválido.
                         limpa_formulário_cep();
-                        alert("Formato de CEP inválido.");
+                         $(".col-md-11").html("<div class='alert-danger'><i class='fa fa-3x fa-align-left fa-exclamation-triangle '> Cep Invalido</i></div>");
                     }
                 } //end if.
                 else {
@@ -348,4 +384,3 @@ JS;
 $this->registerJs($script);
 
 ?>
-

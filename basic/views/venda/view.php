@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ?>
 
 
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->idcompra], [
+        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->idcompra, 'valor' => $model->valor], [
             'class' => 'btn btn-secundary',
             'data' => [
                 'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
@@ -71,3 +71,41 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
 </div>
+
+<?php
+
+
+
+
+$script = <<< JS
+
+
+ 
+      $(document).ready(function() {
+
+          
+          // tentando setar mascara de valor para o campo de id = venda_valor
+          // $("#venda-valor").mask('000.000.000.000.000,00');
+           
+           
+            
+         
+            
+            $("#venda-valor").mask('000.000.000.000.000.00',{reverse:true});
+            
+            
+            
+            //Quando o campo cep perde o foco.
+           
+        });
+
+
+JS;
+
+$this->registerJs($script);
+
+
+
+
+
+?>
