@@ -114,11 +114,11 @@ Version 1.0
 
 #valor_total{
 
-	float: right;
+
 	padding: 3% 3% 3% 3%;
-	//border: solid;
-	margin-right: 3%;
+	margin-left: 3%;
 	background-color: #fff;
+
 }
 
 #valor_total h1{
@@ -129,7 +129,7 @@ Version 1.0
 #valor_total p{
 
 	font-size: 25px;
-	float: right;
+
 }
 
 
@@ -244,10 +244,6 @@ p {
 	color: #777;
 }
 
-.fa:hover{
-
-	color: #30a5ff;
-}
 
 
 
