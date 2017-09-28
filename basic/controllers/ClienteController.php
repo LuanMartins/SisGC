@@ -77,6 +77,7 @@ class ClienteController extends Controller
             ]);
         }
     }
+ 
 
     /**
      * Updates an existing Cliente model.
@@ -89,7 +90,9 @@ class ClienteController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idcomprador]);
+
+            Yii::$app->session->setFlash("alterarCliente");
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
